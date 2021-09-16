@@ -1,0 +1,57 @@
+=hover
+    @media not all and (pointer: coarse)
+        &:hover
+            @content
+
+
+=safeAreaPaddingBottom($paddingBottom: 0px)
+    @supports (padding-bottom: constant(safe-area-inset-bottom))
+        padding-bottom: calc(constant(safe-area-inset-bottom) + #{$paddingBottom})
+
+    @supports (padding-bottom: env(safe-area-inset-bottom))
+        padding-bottom: calc(env(safe-area-inset-bottom) + #{$paddingBottom})
+
+        
+=largeScreenView
+    @media (min-width: 1441px)
+        @content
+=mediumScreenView
+    @media (max-width: 1439px)
+        @content
+=screenView
+    @media (max-width: 1279px)
+        @content
+
+=padView
+    @media (max-width: 1024px)
+        @content
+        
+=smallPadView
+    @media (min-width: 480px) and (max-width: 768px)
+        @content
+
+=mobileView
+    @media (max-width: 768px)
+         @content
+
+=flexCenter
+    display: flex
+    justify-content: center
+    align-items: center
+
+=flexSpaceBetween
+    display: flex
+    justify-content: space-between
+    align-items: center
+
+=transition
+    transition: 0.4s ease all
+
+=readyToIntersect
+    transform: translateY(30px)
+    opacity: 0
+
+=intersected($delay : 0.3s,$transitionTime : 0.6s)
+    transition: $transitionTime ease all $delay
+    transform: translateY(0)
+    opacity: 1

@@ -1,0 +1,48 @@
+@import styles/variables
+@import styles/extends
+
+.navbar
+    +flexSpaceBetween
+
+    padding: 45px 70px
+
+.logo
+    width: 30px
+
+.menu
+    width: 400px
+    position: absolute
+    margin-left: auto
+    margin-right: auto
+    left: 0
+    right: 0
+
+    +flexCenter
+
+    li
+        padding: 0 20px
+        color: $light-grey3
+
+        +transition
+
+        &.active
+            color: $light-grey2
+            font-style: italic
+
+        &:hover
+            color: $light-grey2
+
+            +transition
+
+.right
+    +flexCenter
+
+    .social
+        +flexCenter
+
+        li
+            margin: 0 5px
+            cursor: pointer
+
+    .search
+        margin-left: 45px

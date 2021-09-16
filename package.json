@@ -9,12 +9,25 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "body-scroll-lock": "^4.0.0-beta.0",
+    "classnames": "^2.3.1",
+    "emailjs-com": "^3.2.0",
+    "gsap": "^3.7.1",
     "next": "11.1.2",
+    "next-seo": "^4.26.0",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "react-gsap": "^3.2.1",
+    "react-scrollmagic": "^2.3.0",
+    "sass": "^1.39.0",
+    "scrollmagic": "^2.0.8",
+    "smoothscroll-polyfill": "^0.4.4",
+    "splitting": "^1.0.6"
   },
   "devDependencies": {
+    "@svgr/webpack": "^5.5.0",
     "eslint": "7.32.0",
-    "eslint-config-next": "11.1.2"
+    "eslint-config-next": "11.1.2",
+    "url-loader": "^4.1.1"
   }
 }
