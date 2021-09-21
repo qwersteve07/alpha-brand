@@ -21,8 +21,7 @@
     "react-scrollmagic": "^2.3.0",
     "sass": "^1.39.0",
     "scrollmagic": "^2.0.8",
-    "smoothscroll-polyfill": "^0.4.4",
-    "splitting": "^1.0.6"
+    "smoothscroll-polyfill": "^0.4.4"
   },
   "devDependencies": {
     "@svgr/webpack": "^5.5.0",

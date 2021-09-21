@@ -1,13 +1,10 @@
 import styles from './index.module.sass';
 import unmeLogo from 'images/unme_logo.svg';
 import { Controller, Scene } from 'react-scrollmagic';
-import dynamic from 'next/dynamic';
 import { Tween } from 'react-gsap';
-// import Splitting from 'splitting';
-import { useEffect } from 'react';
-// const Splitting = dynamic(() => import('splitting').then(mod => mod.default), { ssr: false });
-import 'splitting/dist/splitting.css';
-import 'splitting/dist/splitting-cells.css';
+import arrow from 'images/arrow.svg';
+import Button from 'components/button';
+import { PATH } from 'config';
 
 const Intro = () => {
   const splitImageData = [
@@ -64,6 +61,12 @@ const Intro = () => {
     },
   ];
 
+  // useEffect(() => {
+  //   var myPath = document.getElementById('line1-ploy1');
+  //   var length = myPath.getTotalLength();
+  //   console.log(length);
+  // }, []);
+
   return (
     <section className={styles.intro}>
       <Controller>
@@ -100,23 +103,23 @@ const Intro = () => {
                   opacity: 1,
                   transformPerspective: '1000px',
                   rotateX: '3deg',
-                  rotateY: '20deg',
-                  rotateZ: '-5deg',
+                  rotateY: '10deg',
+                  rotateZ: '-7deg',
                   skewY: '5deg',
                 }}
                 totalProgress={progress}
                 paused
               >
-                <svg viewBox="0 0 895.501 488.07" className={styles['svg-line1']}>
+                <svg id="svg-line1" viewBox="0 0 895.5 488.1" className={styles['svg-line1']}>
                   <Scene triggerElement="#line1-poly1" triggerHook={0.7} duration={700} reverse={true}>
                     {progress => (
                       <Tween
                         from={{
-                          strokeDasharray: 700,
-                          strokeDashoffset: 700,
+                          strokeDasharray: 723,
+                          strokeDashoffset: 723,
                         }}
                         to={{
-                          strokeDasharray: 700,
+                          strokeDasharray: 723,
                           strokeDashoffset: 0,
                         }}
                         totalProgress={progress}
@@ -124,7 +127,7 @@ const Intro = () => {
                       >
                         <polyline
                           id="line1-ploy1"
-                          points="894.501 329.643 894.501 487.07 369.855 487.07"
+                          points="894.5,373.5 894.5,487.1 284.9,487.1"
                           fill="none"
                           stroke="#fff"
                           strokeMiterlimit="10"
@@ -138,11 +141,11 @@ const Intro = () => {
                     {progress => (
                       <Tween
                         from={{
-                          strokeDasharray: 1700,
-                          strokeDashoffset: 1700,
+                          strokeDasharray: 1657,
+                          strokeDashoffset: 1657,
                         }}
                         to={{
-                          strokeDasharray: 1700,
+                          strokeDasharray: 1657,
                           strokeDashoffset: 0,
                         }}
                         totalProgress={progress}
@@ -150,7 +153,7 @@ const Intro = () => {
                       >
                         <polyline
                           id="line1-ploy2"
-                          points="256.05 487.07 1 487.07 1 1 894.501 1 894.501 64.095"
+                          points="215.4,487.1 1,487.1 1,1 894.5,1 894.5,64.1 "
                           fill="none"
                           stroke="#fff"
                           strokeMiterlimit="10"
@@ -185,11 +188,11 @@ const Intro = () => {
                     {progress => (
                       <Tween
                         from={{
-                          strokeDasharray: 2800,
-                          strokeDashoffset: 2800,
+                          strokeDasharray: 2795,
+                          strokeDashoffset: 2795,
                         }}
                         to={{
-                          strokeDasharray: 2800,
+                          strokeDasharray: 2795,
                           strokeDashoffset: 0,
                         }}
                         totalProgress={progress}
@@ -271,9 +274,9 @@ const Intro = () => {
                 paused
               >
                 <h3 className={styles.creator}>
-                  Dimension
+                  Brand Dimension
                   <br />
-                  design creator
+                  Creator
                 </h3>
               </Tween>
             )}
@@ -293,35 +296,15 @@ const Intro = () => {
                 totalProgress={progress}
                 paused
               >
-                <h4 className={styles.title}>品牌空間設計師</h4>
+                <h4 className={styles.title}>非我設計創辦人</h4>
                 <p>
-                  現為「非我品牌空間設計」創辦人，這裡純粹就是革命式創業的個人網站
+                  品牌維度是透過多領域設計團隊，銜接品牌策略、市場調查、數據分析，
                   <br />
-                  專門寫一些生活態度跟講課內容，專們嘴一些設計與道德上的謬誤
-                </p>
-              </Tween>
-            )}
-          </Scene>
-
-          <Scene offset={600} triggerHook={0.6} duration={500} reverse={true}>
-            {progress => (
-              <Tween
-                from={{
-                  opacity: 0,
-                  translateY: 50,
-                }}
-                to={{
-                  opacity: 1,
-                  translateY: 0,
-                }}
-                totalProgress={progress}
-                paused
-              >
-                <h4 className={styles.title}>品牌空間設計師</h4>
-                <p>
-                  現為「非我品牌空間設計」創辦人，這裡純粹就是革命式創業的個人網站
+                  建立使用者經驗建的獨特體驗，讓品牌形象一致性提到最高，並作出精準的互動溝通，
                   <br />
-                  專門寫一些生活態度跟講課內容，專們嘴一些設計與道德上的謬誤
+                  藉此讓設計能夠實際幫助品牌營運的串連。
+                  <br />
+                  是的，就是這麼複雜。
                 </p>
               </Tween>
             )}
@@ -349,10 +332,8 @@ const Intro = () => {
             )}
           </Scene>
         </div>
-      </Controller>
-      <Controller>
         <div className={styles.block2}>
-          <Scene offset={600} triggerHook={0.6} duration={500} reverse={true}>
+          <Scene triggerElement="#content" triggerHook={0.6} duration={500} reverse={true}>
             {progress => (
               <Tween
                 from={{
@@ -366,23 +347,35 @@ const Intro = () => {
                 totalProgress={progress}
                 paused
               >
-                <h4> I’m α (Alpha) </h4>
-                <p>
-                  現為「非我品牌空間設計」創辦人
-                  <br />
-                  這裡純粹就是革命式創業的個人網站
-                  <br />
-                  專門寫一些生活態度跟講課內容
-                  <br />
-                  專們嘴一些設計與道德上的謬誤
-                </p>
+                <div className={styles.content} id="content">
+                  <h4>Founder of UNME DESIGN</h4>
+                  <p>
+                    現為「非我品牌空間設計」創辦人
+                    <br />
+                    這裡純粹就是革命式創業的個人網站
+                    <br />
+                    專門寫一些生活態度跟講課內容
+                    <br />
+                    專門嘴一些設計與道德上的謬誤
+                  </p>
+                  <h4>Brand Dimension Creator</h4>
+                  <p>跨領域設計師、講師、品牌顧問、出書中</p>
+                  <img src={arrow} alt="arrow" />
+                  <h3>
+                    重要的不是治病
+                    <br />
+                    而是帶著疾病活下去
+                  </h3>
+                  <p>＃卡繆 ＃革命式生活 ＃創業</p>
+                  <Button link={PATH.ABOUT}>About</Button>
+                </div>
               </Tween>
             )}
           </Scene>
           <div className={styles.split}>
             {splitImageData.map(item => {
               return (
-                <Scene triggerHook="0.7" duration={300} offset={300} triggerElement={`#${item.id}`} key={item.id}>
+                <Scene triggerHook="0.6" duration={300} triggerElement={`#${item.id}`} key={item.id}>
                   {progress => (
                     <Tween to={item.to} totalProgress={progress} paused>
                       <div id={item.id} />

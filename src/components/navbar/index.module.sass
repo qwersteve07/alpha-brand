@@ -4,7 +4,17 @@
 .navbar
     +flexSpaceBetween
 
-    padding: 45px 70px
+    padding: 20px 70px
+    transition: all ease 0.4s
+    width: 100%
+    position: fixed
+    top: 0
+    left: 0
+    z-index: 100
+    &.scroll
+        backdrop-filter: blur(12px)
+        transition: all ease 0.4s
+        box-shadow: 0 0px 30px rgba($black,0.3)
 
 .logo
     width: 30px
@@ -20,7 +30,6 @@
     +flexCenter
 
     li
-        padding: 0 20px
         color: $light-grey3
 
         +transition
@@ -33,6 +42,9 @@
             color: $light-grey2
 
             +transition
+        &>a
+            padding: 0 20px
+
 
 .right
     +flexCenter
