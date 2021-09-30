@@ -1,43 +1,57 @@
 @import styles/variables
 @import styles/extends
 
+.smoke
+    top: 0
+    left: 0
+    position: absolute
+    z-index: 1
+
 .top
     width: 900px
     margin: 0 auto
     display: flex
     justify-content: space-between
     align-items: flex-start
+
     h1
         font-size: 70px
         line-height: 0.75
+
     .content
         width: 440px
+
         p
             font-size: 16px
             margin-bottom: 60px
-            &+p
-                line-height: 1.6
+
+            & + p
+                line-height: 1.7
                 font-size: 18px
                 color: $light-grey2
-    
+
 .form
     position: relative
     margin-bottom: 150px
+
     svg
         transform: perspective(1000px) rotateZ(2deg) rotateY(-10deg) rotateX(0deg) translateX(-21%) skewX(-7deg)
         width: 110%
         position: absolute
         left: 0
         z-index: 0
+
     form
         position: relative
         height: 60vw
         width: 50%
+        max-width: 700px
         margin: 0 auto
         display: flex
         flex-direction: column
         justify-content: center
         align-items: center
+
     input
         width: 100%
         border: 0
@@ -46,28 +60,33 @@
         margin-bottom: 40px
         font-size: 16px
         color: white
+
         &::placeholder
             color: white
             font-family: Playfair Display
             letter-spacing: 1px
+
         &:focus
             outline: none
+
     .textarea-container
         width: 100%
         display: flex
         align-items: flex-start
         justify-content: flex-start
         flex-direction: column
+
         label
             margin-bottom: 20px
+
     .textarea
         position: relative
         height: 23vw
         width: 100%
-        
         transform: perspective(1000px) rotateZ(2deg) rotateY(-10deg) rotateX(3deg) translateX(-7%) skewX(-7deg)
+
         &:before
-            content: ''
+            content: ""
             position: absolute
             top: 0
             left: 0
@@ -75,6 +94,7 @@
             height: 100%
             border: 1px solid white
             pointer-events: none
+
         textarea
             margin: 5% 0 0 2%
             padding: 0
@@ -84,8 +104,12 @@
             border: 0
             transform: perspective(1000px) rotateZ(-2deg) rotateY(10deg) rotateX(-3deg) translateX(7%) skewX(7deg)
             resize: none
+
             &:focus
                 outline: none
+
     .button
         margin-top: 60px
-        
+
+.bottom
+    margin-bottom: 100px

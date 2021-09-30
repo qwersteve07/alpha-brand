@@ -3,6 +3,9 @@ import Subscribe from 'components/subscribe';
 import Wrapper from 'components/wrapper';
 import Button from 'components/button';
 import styles from './index.module.sass';
+import BottomNav from 'components/bottom-nav';
+import { PATH } from 'config';
+import Smoke from 'components/smoke';
 
 const Contact = () => {
   const [formValue, setFormValue] = useState({});
@@ -31,8 +34,22 @@ const Contact = () => {
 
   const onClick = () => {};
 
+  const navList = [
+    {
+      path: PATH.ARTICLES,
+      image: '/contact_articles.jpg',
+      text: 'Articles',
+    },
+    {
+      path: PATH.ABOUT,
+      image: '/contact_about.jpg',
+      text: 'About',
+    },
+  ];
+
   return (
     <Wrapper>
+      <Smoke className={styles.smoke} />
       <div className={styles.top}>
         <h1>
           Contact
@@ -94,6 +111,9 @@ const Contact = () => {
             Send
           </Button>
         </form>
+      </div>
+      <div className={styles.bottom}>
+        <BottomNav navList={navList} />
       </div>
       <Subscribe />
     </Wrapper>

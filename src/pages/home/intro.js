@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import styles from './index.module.sass';
 import unmeLogo from 'images/unme_logo.svg';
 import { Controller, Scene } from 'react-scrollmagic';
@@ -12,60 +13,74 @@ const Intro = () => {
       id: 's1',
       to: {
         translateY: 0,
-        rotate: '-2deg',
+        rotate: '-1deg',
       },
     },
     {
       id: 's2',
       to: {
-        translateY: 45,
-        translateX: 8,
-        rotate: '5deg',
+        translateX: -4,
+        translateY: 15,
+        rotate: '-2deg',
       },
     },
     {
       id: 's3',
       to: {
-        translateY: 5,
+        translateY: -15,
         rotate: '-3deg',
       },
     },
     {
       id: 's4',
       to: {
-        translateY: -10,
-        rotate: '-1deg',
+        translateY: -2,
+        rotate: '1deg',
       },
     },
     {
       id: 's5',
       to: {
-        translateY: 8,
+        translateY: 2,
         rotate: '-1deg',
       },
     },
     {
       id: 's6',
       to: {
-        translateY: 55,
-        translateX: -10,
-        rotate: '4deg',
+        translateY: 5,
+        translateX: -5,
+        rotate: '-1deg',
       },
     },
     {
       id: 's7',
       to: {
-        translateY: 3,
-        rotate: '-6deg',
+        translateX: 5,
+        translateY: 25,
+      },
+    },
+    {
+      id: 's8',
+      to: {
+        translateY: 2,
+        rotate: '2deg',
+      },
+    },
+    {
+      id: 's9',
+      to: {
+        translateX: 5,
+        translateY: -3,
       },
     },
   ];
 
-  // useEffect(() => {
-  //   var myPath = document.getElementById('line1-ploy1');
-  //   var length = myPath.getTotalLength();
-  //   console.log(length);
-  // }, []);
+  useEffect(() => {
+    var myPath = document.getElementById('split-line1');
+    var length = myPath.getTotalLength();
+    console.log(length);
+  }, []);
 
   return (
     <section className={styles.intro}>
@@ -167,7 +182,7 @@ const Intro = () => {
             )}
           </Scene>
 
-          <Scene triggerElement="#svg-line2" triggerHook={0.9} duration={1000} reverse={true}>
+          <Scene triggerElement="#svg-line2" triggerHook={0.9} duration={700} reverse={true}>
             {progress => (
               <Tween
                 from={{
@@ -333,16 +348,16 @@ const Intro = () => {
           </Scene>
         </div>
         <div className={styles.block2}>
-          <Scene triggerElement="#content" triggerHook={0.6} duration={500} reverse={true}>
+          <Scene triggerElement="#content" triggerHook={0.8} duration={800} reverse={true}>
             {progress => (
               <Tween
                 from={{
                   opacity: 0,
-                  translateY: 50,
+                  translateY: 150,
                 }}
                 to={{
                   opacity: 1,
-                  translateY: 0,
+                  translateY: 50,
                 }}
                 totalProgress={progress}
                 paused
@@ -372,18 +387,261 @@ const Intro = () => {
               </Tween>
             )}
           </Scene>
-          <div className={styles.split}>
-            {splitImageData.map(item => {
-              return (
-                <Scene triggerHook="0.6" duration={300} triggerElement={`#${item.id}`} key={item.id}>
-                  {progress => (
-                    <Tween to={item.to} totalProgress={progress} paused>
-                      <div id={item.id} />
-                    </Tween>
-                  )}
-                </Scene>
-              );
-            })}
+          <div className={styles.image}>
+            <div className={styles['line-container']}>
+              <Scene triggerElement={`#split-line1`} triggerHook={0.8} offset={80} duration={140} reverse={true}>
+                {progress => (
+                  <Tween
+                    from={{
+                      strokeDasharray: 650,
+                      strokeDashoffset: 650,
+                    }}
+                    to={{
+                      strokeDasharray: 650,
+                      strokeDashoffset: 0,
+                    }}
+                    totalProgress={progress}
+                    paused
+                  >
+                    <svg viewBox="0 0 650 2" className={styles.line}>
+                      <line
+                        id="split-line1"
+                        y1="1"
+                        x2="650"
+                        y2="1"
+                        fill="none"
+                        stroke="#fff"
+                        strokeMiterlimit="10"
+                        strokeWidth="2"
+                      />
+                    </svg>
+                  </Tween>
+                )}
+              </Scene>
+
+              <Scene triggerElement={`#split-line2`} triggerHook={0.8} duration={140} reverse={true}>
+                {progress => (
+                  <Tween
+                    from={{
+                      strokeDasharray: 560,
+                      strokeDashoffset: -560,
+                    }}
+                    to={{
+                      strokeDasharray: 560,
+                      strokeDashoffset: 0,
+                    }}
+                    totalProgress={progress}
+                    paused
+                  >
+                    <svg viewBox="0 0 560 2" className={styles.line}>
+                      <line
+                        id="split-line2"
+                        y1="1"
+                        x2="560"
+                        y2="1"
+                        fill="none"
+                        stroke="#fff"
+                        strokeMiterlimit="10"
+                        strokeWidth="2"
+                      />
+                    </svg>
+                  </Tween>
+                )}
+              </Scene>
+
+              <Scene triggerElement={`#split-line3`} triggerHook={0.8} duration={140} reverse={true}>
+                {progress => (
+                  <Tween
+                    from={{
+                      strokeDasharray: 480,
+                      strokeDashoffset: 480,
+                    }}
+                    to={{
+                      strokeDasharray: 480,
+                      strokeDashoffset: 0,
+                    }}
+                    totalProgress={progress}
+                    paused
+                  >
+                    <svg viewBox="0 0 480 2" className={styles.line}>
+                      <line
+                        id="split-line3"
+                        y1="1"
+                        x2="480"
+                        y2="1"
+                        fill="none"
+                        stroke="#fff"
+                        strokeMiterlimit="10"
+                        strokeWidth="2"
+                      />
+                    </svg>
+                  </Tween>
+                )}
+              </Scene>
+
+              <Scene triggerElement={`#split-line4`} triggerHook={0.8} duration={140} reverse={true}>
+                {progress => (
+                  <Tween
+                    from={{
+                      strokeDasharray: 410,
+                      strokeDashoffset: -410,
+                    }}
+                    to={{
+                      strokeDasharray: 410,
+                      strokeDashoffset: 0,
+                    }}
+                    totalProgress={progress}
+                    paused
+                  >
+                    <svg viewBox="0 0 410 2" className={styles.line}>
+                      <line
+                        id="split-line4"
+                        y1="1"
+                        x2="410"
+                        y2="1"
+                        fill="none"
+                        stroke="#fff"
+                        strokeMiterlimit="10"
+                        strokeWidth="2"
+                      />
+                    </svg>
+                  </Tween>
+                )}
+              </Scene>
+
+              <Scene triggerElement={`#split-line5`} triggerHook={0.8} duration={140} reverse={true}>
+                {progress => (
+                  <Tween
+                    from={{
+                      strokeDasharray: 320,
+                      strokeDashoffset: -320,
+                    }}
+                    to={{
+                      strokeDasharray: 320,
+                      strokeDashoffset: 0,
+                    }}
+                    totalProgress={progress}
+                    paused
+                  >
+                    <svg viewBox="0 0 320 2" className={styles.line}>
+                      <line
+                        id="split-line5"
+                        y1="1"
+                        x2="320"
+                        y2="1"
+                        fill="none"
+                        stroke="#fff"
+                        strokeMiterlimit="10"
+                        strokeWidth="2"
+                      />
+                    </svg>
+                  </Tween>
+                )}
+              </Scene>
+
+              <Scene triggerElement={`#split-line6`} triggerHook={0.8} duration={140} reverse={true}>
+                {progress => (
+                  <Tween
+                    from={{
+                      strokeDasharray: 375,
+                      strokeDashoffset: 375,
+                    }}
+                    to={{
+                      strokeDasharray: 375,
+                      strokeDashoffset: 0,
+                    }}
+                    totalProgress={progress}
+                    paused
+                  >
+                    <svg viewBox="0 0 375 2" className={styles.line}>
+                      <line
+                        id="split-line6"
+                        y1="1"
+                        x2="375"
+                        y2="1"
+                        fill="none"
+                        stroke="#fff"
+                        strokeMiterlimit="10"
+                        strokeWidth="2"
+                      />
+                    </svg>
+                  </Tween>
+                )}
+              </Scene>
+
+              <Scene triggerElement={`#split-line7`} triggerHook={0.8} duration={140} reverse={true}>
+                {progress => (
+                  <Tween
+                    from={{
+                      strokeDasharray: 435,
+                      strokeDashoffset: -435,
+                    }}
+                    to={{
+                      strokeDasharray: 435,
+                      strokeDashoffset: 0,
+                    }}
+                    totalProgress={progress}
+                    paused
+                  >
+                    <svg viewBox="0 0 435 2" className={styles.line}>
+                      <line
+                        id="split-line7"
+                        y1="1"
+                        x2="435"
+                        y2="1"
+                        fill="none"
+                        stroke="#fff"
+                        strokeMiterlimit="10"
+                        strokeWidth="2"
+                      />
+                    </svg>
+                  </Tween>
+                )}
+              </Scene>
+
+              <Scene triggerElement={`#split-line8`} triggerHook={0.8} duration={140} reverse={true}>
+                {progress => (
+                  <Tween
+                    from={{
+                      strokeDasharray: 510,
+                      strokeDashoffset: 510,
+                    }}
+                    to={{
+                      strokeDasharray: 510,
+                      strokeDashoffset: 0,
+                    }}
+                    totalProgress={progress}
+                    paused
+                  >
+                    <svg viewBox="0 0 510 2" className={styles.line}>
+                      <line
+                        id="split-line8"
+                        y1="1"
+                        x2="510"
+                        y2="1"
+                        fill="none"
+                        stroke="#fff"
+                        strokeMiterlimit="10"
+                        strokeWidth="2"
+                      />
+                    </svg>
+                  </Tween>
+                )}
+              </Scene>
+            </div>
+            <div className={styles['split-container']}>
+              {splitImageData.map(item => {
+                return (
+                  <Scene triggerHook="0.8" duration={800} triggerElement={`#${item.id}`} key={item.id}>
+                    {progress => (
+                      <Tween to={{ ...item.to, opacity: 0.5 }} totalProgress={progress} paused>
+                        <div className={styles.split} id={item.id} />
+                      </Tween>
+                    )}
+                  </Scene>
+                );
+              })}
+            </div>
           </div>
         </div>
       </Controller>

@@ -7,6 +7,7 @@
 .intro
     width: 100%
     max-width: 1440px
+    margin: 0 auto
 
 .block1
     width: 100%
@@ -40,14 +41,14 @@
     .title
         color: $light-grey2
         font-size: 24px
-        top: 580px
+        top: 540px
         left: 33%
         letter-spacing: 4px
 
     p
         color: $light-grey3
         font-size: 16px
-        top: 650px
+        top: 590px
         left: 33%
 
     ul
@@ -75,71 +76,158 @@
     display: flex
     justify-content: center
     align-items: flex-top
+
     h3
         margin: 0 0 10px
         font-size: 26px
-        &+p
+        font-weight: bold
+
+        & + p
             font-size: 14px
             margin-bottom: 25px
+
     h4
         color: $light-grey2
         font-size: 20px
         font-weight: normal
         margin: 30px 0 10px
+
     p
         font-size: 16px
         color: $light-grey3
+
     .content
         margin-right: 170px
+
     img
         height: 70px
         width: auto
-        margin: 30px 0 
+        margin: 30px 0
+
 .image
-    width: 467px
+    width: 505px
+    height: 706px
 
-.split
-    width: 467px
-    height: 569px
-    display: flex
+    .line-container
+        position: relative
+        z-index: 1
+        mix-blend-mode: overlay
 
-    & > div
+    .line
+        position: absolute
+
+        &:nth-of-type(1)
+            left: -15%
+            top: 55px
+            transform: rotate(8deg)
+            width: 650px
+
+        &:nth-of-type(2)
+            right: -6%
+            top: 135px
+            transform: rotate(-8deg)
+            width: 560px
+
+        &:nth-of-type(3)
+            left: 4%
+            top: 202px
+            transform: rotate(8deg)
+            width: 480px
+
+        &:nth-of-type(4)
+            right: 6%
+            top: 260px
+            transform: rotate(-8deg)
+            width: 410px
+
+        &:nth-of-type(5)
+            right: 16%
+            top: 435px
+            transform: rotate(-8deg)
+            width: 320px
+
+        &:nth-of-type(6)
+            left: 16%
+            top: 480px
+            transform: rotate(8deg)
+            width: 375px
+
+        &:nth-of-type(7)
+            right: 3%
+            top: 532px
+            transform: rotate(-8deg)
+            width: 435px
+
+        &:nth-of-type(8)
+            left: 4%
+            top: 593px
+            transform: rotate(8deg)
+            width: 510px
+
+    .split-container
+        display: flex
+        width: 100%
+        height: 100%
+
+    .split
         flex: 1
-        background: url("/not-alpha.jpg")
+        background: url("/alpha-intro.jpg")
         background-repeat: no-repeat
         background-size: auto 100%
+        filter: brightness(0.6)
 
         &:nth-of-type(1)
             background-position: 0 0
 
         &:nth-of-type(2)
-            background-position: 16.66% 0
+            background-position: 12.5% 0
 
         &:nth-of-type(3)
-            background-position: 33.32% 0
+            background-position: 25% 0
 
         &:nth-of-type(4)
-            background-position: 49.98% 0
+            background-position: 37.5% 0
 
         &:nth-of-type(5)
-            background-position: 66.64% 0
+            background-position: 50% 0
 
         &:nth-of-type(6)
-            background-position: 83.3% 0
+            background-position: 62.5% 0
 
         &:nth-of-type(7)
+            background-position: 75% 0
+
+        &:nth-of-type(8)
+            background-position: 87.5% 0
+
+        &:nth-of-type(9)
             background-position: 100% 0
 
 .articles
     color: $light-grey2
+    position: relative
+
+    &:before
+        content: ""
+        background-image: url("/paper-bg.png")
+        background-repeat: repeat-y
+        background-size: cover
+        mix-blend-mode: color-burn
+        width: 100%
+        height: 100%
+        z-index: 0
+        position: absolute
+        left: 0
+        top: 0
+
 .guide
     h3
         font-size: 24px
+
     p
         margin: 20px 0 45px
         font-size: 20px
+
     .sub
         font-size: 16px
         color: $light-grey3
-
-
