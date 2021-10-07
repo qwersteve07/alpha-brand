@@ -6,6 +6,7 @@ import styles from './index.module.sass';
 import BottomNav from 'components/bottom-nav';
 import { PATH } from 'config';
 import Smoke from 'components/smoke';
+import Footer from 'components/footer';
 
 const Contact = () => {
   const [formValue, setFormValue] = useState({});
@@ -56,7 +57,7 @@ const Contact = () => {
           <br />
           Alpha
         </h1>
-        <div className={styles.content}>
+        <div className={styles.desc}>
           <p>在「About」裡頭，能夠找到更多創業、設計、講課、生活態度的介紹，如果有任何問題或合作，歡迎與我聯繫。</p>
           <p>
             目前開放的聯繫項目為：
@@ -116,6 +117,7 @@ const Contact = () => {
         <BottomNav navList={navList} />
       </div>
       <Subscribe />
+      <Footer />
     </Wrapper>
   );
 };

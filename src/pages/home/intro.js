@@ -348,7 +348,7 @@ const Intro = () => {
           </Scene>
         </div>
         <div className={styles.block2}>
-          <Scene triggerElement="#content" triggerHook={0.8} duration={800} reverse={true}>
+          <Scene triggerElement="#intro-content" triggerHook={0.8} duration={800} reverse={true}>
             {progress => (
               <Tween
                 from={{
@@ -362,7 +362,7 @@ const Intro = () => {
                 totalProgress={progress}
                 paused
               >
-                <div className={styles.content} id="content">
+                <div className={styles.content} id="intro-content">
                   <h4>Founder of UNME DESIGN</h4>
                   <p>
                     現為「非我品牌空間設計」創辦人

@@ -7,7 +7,6 @@ const Wrapper = ({ children }) => {
     <main className={styles.wrapper}>
       <Navbar />
       {children}
-      <Footer />
     </main>
   );
 };
