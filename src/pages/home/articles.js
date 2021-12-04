@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import styles from './index.module.sass';
-import { Controller, Scene } from 'react-scrollmagic';
-import { Tween } from 'react-gsap';
+import { Controller } from 'react-scrollmagic';
 import Subscribe from 'components/subscribe';
 import Footer from 'components/footer';
 import SceneElement from 'components/scene-el';
@@ -41,7 +40,7 @@ const Articles = () => {
     <section className={styles.articles}>
       <Controller>
         <div className={styles.guide}>
-          <div className={styles.image}>
+          <div className={styles['guide-image']}>
             <img src="/alpha-article.jpg" alt="article" />
             <SceneElement
               triggerElement="#article-image-line"

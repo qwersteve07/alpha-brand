@@ -7,10 +7,13 @@ import BottomNav from 'components/bottom-nav';
 import { PATH } from 'config';
 import Smoke from 'components/smoke';
 import Footer from 'components/footer';
+import validator from 'validator';
+import emailjs from 'emailjs-com';
 
 const Contact = () => {
   const [formValue, setFormValue] = useState({});
   const [formError, setFormError] = useState({});
+  const [buttonLoading, setButtonLoading] = useState(false);
 
   const formList = [
     {
@@ -33,8 +36,6 @@ const Contact = () => {
     },
   ];
 
-  const onClick = () => {};
-
   const navList = [
     {
       path: PATH.ARTICLES,
@@ -48,6 +49,69 @@ const Contact = () => {
     },
   ];
 
+  const onSend = e => {
+    e.preventDefault();
+
+    const preCheck = () => {
+      const pass = formList.every(item => {
+        if (item.id === 'Email') {
+          return validator.isEmail(formValue.email ?? '');
+        }
+        return formValue[item];
+      });
+
+      if (!pass) {
+        setFormError(prev => {
+          // 將 object 轉為 array 後處理
+          const newDataEntries = formList.map(item => {
+            if (item === 'Email') {
+              return [item, !validator.isEmail(formValue.email)];
+            }
+            return [item, !formValue[item]];
+          });
+
+          return {
+            ...prev,
+            ...Object.fromEntries(newDataEntries),
+          };
+        });
+      }
+    };
+
+    if (!preCheck()) return;
+
+    setFormError(() => ({}));
+
+    setButtonLoading(true);
+
+    return;
+
+    emailjs
+      .send(serviceId, mailTemplateId, filterFormData(), userID)
+      .then(() => {
+        setResponse(true);
+        setResponseMessage(() => ({
+          title: '信件發送成功',
+          desc: '我們已收到您的需求，請耐心等候，我們將儘速與您聯繫！',
+        }));
+        localStorage.clear();
+      })
+      .catch(error => {
+        setResponse(true);
+        setResponseMessage(() => ({
+          title: '信件發送失敗',
+          desc: '發送需求時遇到錯誤，請重新寄送，謝謝',
+        }));
+      })
+      .finally(() => {
+        setButtonLoading(false);
+      });
+  };
+
+  const onChange = (id, value) => {
+    setFormValue(prev => ({ ...prev, [id]: value }));
+  };
+
   return (
     <Wrapper>
       <Smoke className={styles.smoke} />
@@ -58,7 +122,17 @@ const Contact = () => {
           Alpha
         </h1>
         <div className={styles.desc}>
-          <p>在「About」裡頭，能夠找到更多創業、設計、講課、生活態度的介紹，如果有任何問題或合作，歡迎與我聯繫。</p>
+          <p>
+            在「About」裡頭，
+            <br />
+            能夠找到更多創業、設計、講課、
+            <br />
+            生活態度的介紹，
+            <br />
+            如果有任何問題或合作，
+            <br />
+            歡迎與我聯繫。
+          </p>
           <p>
             目前開放的聯繫項目為：
             <br />
@@ -108,7 +182,7 @@ const Contact = () => {
               </React.Fragment>
             );
           })}
-          <Button onClick={onClick} className={styles.button}>
+          <Button onClick={onSend} className={styles.button}>
             Send
           </Button>
         </form>

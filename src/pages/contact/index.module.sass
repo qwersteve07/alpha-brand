@@ -8,11 +8,14 @@
     z-index: 1
 
 .top
-    width: 900px
+    width: 100%
+    max-width: 900px
     margin: 0 auto
     display: flex
     justify-content: space-between
     align-items: flex-start
+
+    +top
 
     h1
         font-size: 70px
@@ -21,30 +24,58 @@
     .desc
         width: 440px
 
-        p
-            font-size: 16px
-            margin-bottom: 60px
-            line-height: 1.2
+    p
+        font-size: 16px
+        margin-bottom: 60px
+        line-height: 1.2
+        color: $light-grey2
 
-            & + p
-                line-height: 1.7
-                font-size: 18px
-                color: $light-grey2
+        &:first-of-type
+            br
+                display: none
+
+        &:last-of-type
+            line-height: 1.7
+            font-size: 18px
+
+    +mobileView
+        padding-left: 30px
+        padding-right: 30px
+        flex-direction: column
+
+        h1
+            font-size: 50px
+            margin-bottom: 50px
+
+        .desc
+            width: 100%
+
+        p
+            &:first-of-type
+                line-height: 1.4
+
+                br
+                    display: inherit
+
+            &:last-of-type
+                font-size: 14px
 
 .form
     position: relative
-    margin-bottom: 150px
+    padding: 200px 0
+    overflow: hidden
 
     svg
-        transform: perspective(1000px) rotateZ(2deg) rotateY(-10deg) rotateX(0deg) translateX(-21%) skewX(-7deg)
+        transform: perspective(1000px) rotateZ(0deg) rotateY(-6deg) rotateX(0deg) translateX(-21%) skewX(-7deg) scaleY(0.8)
         width: 110%
         position: absolute
+        transform-origin: top left
+        top: 150px
         left: 0
         z-index: 0
 
     form
         position: relative
-        height: 60vw
         width: 50%
         max-width: 700px
         margin: 0 auto
@@ -70,6 +101,11 @@
         &:focus
             outline: none
 
+        &:-webkit-autofill, &:-webkit-autofill:hover, &:-webkit-autofill:focus
+            background: transparent
+            -webkit-text-fill-color: white
+            -webkit-box-shadow: 0 0 0 1000px $bg-black2 inset
+
     .textarea-container
         width: 100%
         display: flex
@@ -84,9 +120,9 @@
         position: relative
         height: 23vw
         width: 100%
-        transform: perspective(1000px) rotateZ(2deg) rotateY(-10deg) rotateX(3deg) translateX(-7%) skewX(-7deg)
 
         &:before
+            transform: perspective(1000px) rotateZ(1.5deg) rotateY(-11deg) rotateX(-4deg) translateX(-7%) skewX(-8deg)
             content: ""
             position: absolute
             top: 0
@@ -97,13 +133,12 @@
             pointer-events: none
 
         textarea
-            margin: 5% 0 0 2%
-            padding: 0
-            width: 90%
+            margin-top: 30px
+            padding: 0 100px 0 50px
+            width: 100%
             height: 80%
             color: white
             border: 0
-            transform: perspective(1000px) rotateZ(-2deg) rotateY(10deg) rotateX(-3deg) translateX(7%) skewX(7deg)
             resize: none
 
             &:focus
@@ -111,6 +146,43 @@
 
     .button
         margin-top: 60px
+
+    +screenView
+        svg
+            transform: perspective(1000px) rotateZ(0deg) rotateY(-6deg) rotateX(0deg) translateX(-21%) skewX(-7deg)
+
+        .textarea
+            textarea
+                padding: 0 80px 0 40px
+                height: 70%
+
+
+    +mobileView
+        padding: 90px 0 160px
+
+        form
+            position: relative
+            width: 100%
+            padding: 0 30px
+            height: auto
+
+        svg
+            top: 90px
+            transform: perspective(1000px) rotateZ(-1deg) rotateY(-16deg) rotateX(2deg) translateX(-8%) skewX(2deg) scaleY(3) translateY(-17px)
+
+        input
+            font-size: 14px
+
+        .textarea
+            height: 400px
+            width: 100%
+
+            &:before
+                transform: perspective(1000px) rotateZ(1deg) rotateY(-17deg) rotateX(-4deg) translateX(-5%) skewX(-2deg)
+
+            textarea
+                padding: 0 45px 0 30px
+                height: 80%
 
 .bottom
     margin-bottom: 100px

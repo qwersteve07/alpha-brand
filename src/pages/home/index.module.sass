@@ -3,9 +3,12 @@
 
 .top
     height: 55vw
+    max-height: 100vh
     width: 100%
     background: $bg-black1
     position: relative
+
+    +top
 
     &:before, &:after
         content: ""
@@ -22,6 +25,9 @@
         left: 55vw
 
     canvas
+        position: absolute
+        top: 0
+        left: 0
         mix-blend-mode: overlay
 
     h1
@@ -30,18 +36,34 @@
         font-size: 200px
         position: absolute
         bottom: 0
-        left: 21.4vw
+        left: 23vw
+
+    +padView
+        height: 125vw
+
+        &:before
+            left: 42.5vw
+
+        &:after
+            content: none
+
+        h1
+            font-size: 22vw
+            left: 44vw
 
 .intro
     width: 100%
     max-width: 1440px
-    margin: 0 auto
+    margin: 0 auto 200px
+
+    +mobileView
+        margin: 50px auto 70px
 
 .block1
     width: 100%
     height: 1200px
     position: relative
-    margin: 0 auto
+    margin: 200px auto 0
 
     & > *
         position: absolute
@@ -63,7 +85,7 @@
 
     .creator
         font-size: 40px
-        top: 320px
+        top: 360px
         left: 33%
 
     .title
@@ -78,6 +100,7 @@
         font-size: 16px
         top: 590px
         left: 33%
+        line-height: 1.5
 
     ul
         color: $light-grey3
@@ -99,8 +122,46 @@
         left: 10%
         top: 130px
 
+    +screenView
+        height: 1000px
+
+        h3
+            font-size: 30px
+
+        .creator
+            font-size: 30px
+            top: 26vw
+
+        .title
+            top: 39vw
+
+        p
+            top: 42vw
+
+        .svg-line2
+            top: 22vw
+
+        ul
+            right: 11%
+            top: 26vw
+
+
+    +mobileView
+        height: auto
+        margin: 50px 40px
+        width: auto
+        font-size: 12px
+
+        & > *
+            position: static
+
+        p
+            font-size: 12px
+
+        ul
+            margin-top: 25px
+
 .block2
-    height: 1000px
     display: flex
     justify-content: center
     align-items: flex-start
@@ -123,6 +184,7 @@
     p
         font-size: 16px
         color: $light-grey3
+        line-height: 1.5
 
     .content
         margin-right: 170px
@@ -132,67 +194,91 @@
         width: auto
         margin: 30px 0
 
+    +screenView
+        .content
+            margin-right: 75px
+
+
+    +mobileView
+        flex-direction: column
+        margin: 50px 40px
+
+        h4, h3
+            font-size: 16px
+
+        p
+            font-size: 14px
+
+        .image
+            margin: 100px 0 40px
+            width: 100%
+            height: calc((100vw - 80px) * 1.4)
+
 .image
     width: 505px
     height: 706px
+    position: relative
 
     .line-container
-        position: relative
         z-index: 1
-        mix-blend-mode: overlay
 
     .line
         position: absolute
 
         &:nth-of-type(1)
-            left: -15%
-            top: 55px
             transform: rotate(8deg)
-            width: 650px
+            left: -15%
+            top: 8%
+            width: 130%
 
         &:nth-of-type(2)
-            right: -6%
-            top: 135px
             transform: rotate(-8deg)
-            width: 560px
+            right: -6%
+            top: 19.5%
+            width: 112%
 
         &:nth-of-type(3)
-            left: 4%
-            top: 202px
             transform: rotate(8deg)
-            width: 480px
+            left: 4%
+            top: 28.5%
+            width: 96%
 
         &:nth-of-type(4)
-            right: 6%
-            top: 260px
             transform: rotate(-8deg)
-            width: 410px
+            right: 6%
+            width: 82%
+            top: 37%
 
         &:nth-of-type(5)
-            right: 16%
-            top: 435px
             transform: rotate(-8deg)
-            width: 320px
+            right: 16%
+            top: 61.5%
+            width: 64%
 
         &:nth-of-type(6)
-            left: 16%
-            top: 480px
             transform: rotate(8deg)
-            width: 375px
+            left: 16%
+            width: 75%
+            top: 68%
 
         &:nth-of-type(7)
-            right: 3%
-            top: 532px
             transform: rotate(-8deg)
-            width: 435px
+            right: 3%
+            width: 87%
+            top: 75%
 
         &:nth-of-type(8)
             left: 4%
             top: 593px
             transform: rotate(8deg)
-            width: 510px
+            width: 102%
+            top: 84%
 
     .split-container
+        position: absolute
+        top: 0
+        left: 0
+        z-index: 2
         display: flex
         width: 100%
         height: 100%
@@ -254,14 +340,14 @@
     align-items: flex-start
     padding-top: 260px
 
-    .image
+    .guide-image
         position: relative
 
     svg
         position: absolute
-        bottom: 162px
-        left: -61px
-        width: 520px
+        bottom: -10%
+        left: -12%
+        width: 104%
 
     h3
         position: absolute
@@ -286,3 +372,25 @@
     .sub
         font-size: 16px
         color: $light-grey3
+
+    +mobileView
+        padding-top: 50px
+        flex-direction: column
+        margin: 0 40px
+
+        .guide-image
+            transform: translateX(15px)
+
+        h3
+            right: -10px
+            font-size: 38px
+
+        .desc
+            margin: 70px 0 0
+            width: auto
+
+        h4
+            font-size: 20px
+
+        p
+            font-size: 16px

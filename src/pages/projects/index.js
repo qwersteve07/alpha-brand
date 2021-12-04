@@ -1,19 +1,23 @@
 import fs from 'fs';
 import Link from 'next/link';
+import matter from 'gray-matter';
 import styles from './index.module.sass';
 import Footer from 'components/footer';
 import Wrapper from 'components/wrapper';
-import { PROJECTS_ARTICLES_PATH } from 'config';
 import Smoke from 'components/smoke';
+import Divider from 'components/divider';
+import { PROJECTS_POST_PATH } from 'config';
+import useDeviceType, { DEVICE_MOBILE } from 'utils/use-device-type';
 
-const Create = ({ projectsData, partnersData }) => {
+const Projects = ({ projectsData, partnersData }) => {
+  const deviceType = useDeviceType();
   const Top = () => {
     return (
       <div className={styles.top}>
         <h1>
-          Contact
-          <br />
           Alpha
+          <br />
+          Created...
         </h1>
         <div className={styles.desc}>
           <p>
@@ -27,6 +31,8 @@ const Create = ({ projectsData, partnersData }) => {
             <br />
             以及過往的所有媒體採訪、課程、演講資訊。
           </p>
+          {deviceType === DEVICE_MOBILE && <Divider />}
+
           <p>
             <b>Brand Dimension</b>
             ○ 品牌顧問 Brand Consulting
@@ -48,56 +54,77 @@ const Create = ({ projectsData, partnersData }) => {
     );
   };
 
-  const Partner = () => {
+  const ProjectsList = () => {
     return (
-      <section className={styles.clients}>
+      <section className={styles.projects}>
+        {projectsData.map(data => {
+          const { title, define, id, projectName } = data;
+
+          return (
+            <Link href={`/projects/[id]`} as={`/projects/${id}`} key={id}>
+              <a className={styles.project}>
+                <div className={`${styles.image}`} style={{ backgroundImage: `url('/projects/${id}/${id}_1.jpg')` }} />
+                <div className={styles.info}>
+                  <h4>{title}</h4>
+                  <p>
+                    {projectName}
+                    <br />
+                    {define}
+                  </p>
+                </div>
+              </a>
+            </Link>
+          );
+        })}
+      </section>
+    );
+  };
+
+  const PartnersList = () => {
+    return (
+      <section className={styles.partners}>
         <h2>Brand Partner</h2>
         <h3>品牌夥伴</h3>
-        <div className={styles.images}>
+        <ul>
           {partnersData.map(image => {
-            if (projectsData.indexOf(image.id) !== -1) {
-              return (
-                <div key={image.id}>
-                  <Link href={`${PATH.PROJECTS}/${image.id}`}>
-                    <a>
-                      <img src={image.file} alt="partner" />
-                    </a>
-                  </Link>
-                </div>
-              );
-            }
             return (
-              <div key={image.id}>
-                <span>
-                  <img src={image.file} alt="" />
-                </span>
-              </div>
+              <li key={image.id}>
+                <img src={image.file} alt={image.id} />
+              </li>
             );
           })}
-        </div>
+        </ul>
       </section>
     );
   };
   return (
     <Wrapper>
       <Smoke className={styles.smoke} />
-
       <Top />
-      <Partner />
+      <ProjectsList />
+      <PartnersList />
       <Footer />
     </Wrapper>
   );
 };
 
 export async function getStaticProps() {
-  //   const projectFiles = fs.readdirSync(`${process.cwd()}/${PROJECTS_ARTICLES_PATH}`);
-  //   const projectsData = projectFiles.map(filename => filename.replace('.md', ''));
-  const projectsData = {};
+  const projectFiles = fs.readdirSync(`${process.cwd()}/${PROJECTS_POST_PATH}`);
+  const projectsData = projectFiles.map(filename => {
+    const markdownWithMetadata = fs.readFileSync(`${PROJECTS_POST_PATH}/${filename}`).toString();
+
+    let { data } = matter(markdownWithMetadata);
+
+    return {
+      id: filename.replace('.md', ''),
+      ...data,
+    };
+  });
 
   const partnersFiles = fs.readdirSync(`${process.cwd()}/public/partners`);
   const partnersData = partnersFiles.map(name => ({
     id: name.replace('.jpg', ''),
-    file: `/clients/${name}`,
+    file: `/partners/${name}`,
   }));
 
   return {
@@ -108,4 +135,4 @@ export async function getStaticProps() {
   };
 }
 
-export default Create;
+export default Projects;

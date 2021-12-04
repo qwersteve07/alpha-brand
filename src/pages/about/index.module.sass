@@ -1,0 +1,777 @@
+@import styles/variables
+@import styles/extends
+
+.title
+    text-align: center
+
+    h3
+        font-size: 30px
+        font-weight: bold
+        margin-bottom: 15px
+        color: $light-grey2
+        letter-spacing: 3px
+
+    span
+        font-size: 20px
+        color: $light-grey3
+
+    +mobileView
+        h3
+            font-size: 20px
+            margin-bottom: 10px
+
+        span
+            font-size: 16px
+
+.top
+    +flexCenter
+    +top
+
+    max-width: 1000px
+    width: 100%
+    margin: 0 auto 300px
+
+    & > h1
+        display: none
+
+    .image
+        flex: 1 0 505px
+        height: 706px
+        transform: translateY(50px)
+        opacity: 0
+
+    .split-container
+        display: flex
+        width: 100%
+        height: 100%
+
+    .split
+        flex: 1
+        background: url("/alpha-intro.jpg")
+        background-repeat: no-repeat
+        background-size: auto 100%
+        filter: brightness(0.6)
+
+        &:nth-of-type(1)
+            background-position: 0 0
+
+        &:nth-of-type(2)
+            background-position: 12.5% 0
+
+        &:nth-of-type(3)
+            background-position: 25% 0
+
+        &:nth-of-type(4)
+            background-position: 37.5% 0
+
+        &:nth-of-type(5)
+            background-position: 50% 0
+
+        &:nth-of-type(6)
+            background-position: 62.5% 0
+
+        &:nth-of-type(7)
+            background-position: 75% 0
+
+        &:nth-of-type(8)
+            background-position: 87.5% 0
+
+        &:nth-of-type(9)
+            background-position: 100% 0
+
+    .content
+        margin-right: 115px
+        transform: translateY(-40px)
+        opacity: 0
+
+    h1
+        font-size: 100px
+        position: relative
+
+        &:before, &:after
+            content: ""
+            position: absolute
+            height: 1px
+            width: 100%
+            background: white
+            bottom: 0
+            left: 0
+
+    h2
+        font-size: 20px
+        color: $light-grey2
+        margin: 100px 0 55px
+        line-height: 1.5
+
+    span
+        font-size: 30px
+        color: $light-grey3
+
+    .button
+        margin-top: 25px
+        width: 150px
+
+    &.loaded
+        .content
+            transform: translateY(0)
+            opacity: 1
+            transition: 1s ease all
+
+        h1
+            &:before, &:after
+                transition: 0.8s ease all
+
+            &:before
+                transform: rotate(5deg)
+
+            &:after
+                transform: rotate(-5deg) scaleX(0.8) translateY(26px)
+
+        .image
+            transform: translateY(0)
+            opacity: 1
+            transition: 0.8s ease all
+
+        .split
+            transition: 1.4s ease-out all
+
+            &:nth-of-type(1)
+                transform: rotate(-1deg)
+
+            &:nth-of-type(2)
+                transform: translate(-4px, 15px) rotate(-2deg)
+
+            &:nth-of-type(3)
+                transform: translateY(-15px) rotate(-3deg)
+
+            &:nth-of-type(4)
+                transform: translateY(-2px) rotate(1deg)
+
+            &:nth-of-type(5)
+                transform: translateY(2px) rotate(-1deg)
+
+            &:nth-of-type(6)
+                transform: translate(-5px, 5px) rotate(-1deg)
+
+            &:nth-of-type(7)
+                transform: translate(5px, 25px)
+
+            &:nth-of-type(8)
+                transform: translateY(2px) rotate(2deg)
+
+            &:nth-of-type(9)
+                transform: translate(5px, -3px)
+
+    +screenView
+        width: 85%
+
+        .image
+            flex: 1 0 404px
+            height: 564px
+
+        h1
+            font-size: 80px
+
+
+    +padView
+        width: 80%
+
+        .content
+            margin-right: 80px
+
+        h2
+            font-size: 16px
+
+        span
+            font-size: 20px
+
+
+    +mobileView
+        margin-bottom: 130px
+        position: relative
+        flex-direction: column-reverse
+
+        .image
+            flex: inherit
+            width: 80vw
+            height: 108vw
+
+        .content
+            h1
+                display: none
+
+        h1
+            position: absolute
+            top: 130px
+            left: 0
+            font-size: 65px
+            display: inherit
+            z-index: 10
+            width: 100%
+
+        h2
+            margin: 55px 0 20px
+
+        span
+            font-size: 16px
+
+        .button
+            margin-top: 20px
+            height: 30px
+            width: 100px
+            font-size: 14px
+
+// model
+.model
+    max-width: 1135px
+    width: 100%
+    margin: 0 auto 370px
+
+    .main
+        margin-top: 180px
+
+    .image
+        position: relative
+
+    .name
+        text-align: center
+        font-size: 20px
+        color: $light-grey2
+        margin-top: 5px
+        margin-left: 5px
+
+    .planet
+        position: absolute
+        top: -40px
+        left: -50px
+        width: 130px
+        height: 100px
+        text-align: center
+        z-index: 10
+
+        svg
+            animation: planet ease 25s infinite
+
+        span
+            color: $light-grey3
+            margin-top: 10px
+            display: inline-block
+            font-size: 20px
+
+    .oval
+        width: 100%
+        position: absolute
+        left: 0
+        top: 0
+
+    .explain
+        position: absolute
+        color: $light-grey2
+
+        +readyToIntersect
+
+        .subTitle
+            font-size: 20px
+            margin-bottom: 10px
+            position: relative
+            display: inline-block
+            line-height: 1.3
+
+            &:before, &:after
+                content: ""
+                position: absolute
+
+            &:before
+                width: 5px
+                height: 5px
+                border-radius: 50%
+                background: $light-grey3
+                top: 10px
+
+            br
+                display: none
+
+        .desc
+            font-size: 16px
+
+        &.brand
+            top: 50%
+            left: calc(50% - 24px)
+
+            .subTitle
+                font-size: 16px
+                color: $light-grey3
+                position: static
+
+        &.design
+            top: -65px
+            left: 7%
+
+            .subTitle
+                &:before
+                    right: -12px
+
+                &:after
+                    width: 80px
+                    height: 100px
+                    border-top: 1px solid $light-grey3
+                    border-right: 1px solid $light-grey3
+                    top: 12px
+                    right: -92px
+
+        &.people
+            top: -65px
+            right: 26%
+
+            .subTitle
+                &:before
+                    right: -12px
+
+                &:after
+                    width: 80px
+                    height: 130px
+                    border-top: 1px solid $light-grey3
+                    border-right: 1px solid $light-grey3
+                    top: 12px
+                    right: -92px
+
+        &.timeline
+            bottom: -40px
+            right: 0%
+
+            .subTitle
+                &:before
+                    left: -12px
+
+                &:after
+                    width: 80px
+                    height: 130px
+                    border-left: 1px solid $light-grey3
+                    border-bottom: 1px solid $light-grey3
+                    bottom: 10px
+                    left: -92px
+
+    +screenView
+        width: 80%
+
+
+    +padView
+        .explain
+            .subTitle
+                font-size: 16px
+
+            .desc
+                font-size: 14px
+
+
+    +mobileView
+        margin-bottom: 130px
+
+        .main
+            margin-top: 120px
+
+        .name
+            font-size: 12px
+
+        .explain
+            .subTitle
+                font-size: 12px
+
+                br
+                    display: inherit
+
+            .desc
+                display: none
+
+            &.brand
+                position: absolute
+                top: -50px
+                left: 63%
+
+                .subTitle
+                    font-size: 12px
+
+                    &:before
+                        top: 5px
+                        left: -12px
+                        right: auto
+
+                    &:after
+                        border-top: 1px solid $light-grey3
+                        border-left: 1px solid $light-grey3
+                        width: 20px
+                        height: 80px
+                        top: 7px
+                        right: auto
+                        left: -32px
+
+            &.design
+                top: -70px
+                left: 0
+
+                .subTitle
+                    &:before
+                        top: 5px
+                        right: -12px
+
+                    &:after
+                        width: 36px
+                        height: 70px
+                        right: -48px
+                        top: 7px
+
+            &.people
+                top: -30px
+                right: 5%
+
+                .subTitle
+                    &:before
+                        top: 5px
+                        left: -12px
+                        right: auto
+
+                    &:after
+                        border-left: 1px solid $light-grey3
+                        border-right: none
+                        width: 20px
+                        height: 30px
+                        top: 7px
+                        right: auto
+                        left: -32px
+
+            &.timeline
+                bottom: -35px
+
+                .subTitle
+                    &:before
+                        left: -12px
+                        top: 7px
+
+                    &:after
+                        width: 20px
+                        height: 60px
+                        bottom: 5px
+                        left: -32px
+
+        .planet
+            width: 40px
+            top: -13px
+            left: -20px
+
+            span
+                margin-top: 5px
+                font-size: 12px
+
+@keyframes planet
+    0%
+        transform: rotate(0deg)
+
+    50%
+        transform: rotate(30deg)
+
+    100%
+        transform: rotate(0deg)
+
+// core
+
+.core
+    position: relative
+
+    .svg-bg
+        transform: perspective(1000px) rotateZ(0deg) rotateY(-6deg) rotateX(0deg) translateX(-21%) skewX(-7deg) scaleY(0.8)
+        max-height: 900px
+        position: absolute
+        transform-origin: top left
+        top: 25px
+        left: 0
+        z-index: -1
+
+    .list
+        max-width: 1140px
+        width: 100%
+        margin: 0 auto 350px
+        margin-top: 90px
+        display: flex
+        justify-content: space-between
+        align-items: stretch
+
+    .item
+        width: calc((100% - 150px) / 3)
+        position: relative
+        padding: 65px 55px
+        perspective: 1300px
+
+        .frame
+            position: absolute
+            top: 0
+            left: 0
+            width: 100%
+            height: 100%
+            border: 2px solid white
+
+        .nameCn
+            font-size: 24px
+            color: $light-grey2
+            text-align: center
+
+        .nameEn
+            font-size: 18px
+            color: $light-grey2
+            text-align: center
+
+        img
+            margin: 28px auto
+            height: 40px
+
+        .content
+            font-size: 16px
+            color: $light-grey3
+            line-height: 1.5
+            text-align: justify
+
+    +screenView
+        .list
+            width: 80%
+
+        .item
+            width: calc((100% - 100px) / 3)
+            padding: 35px
+
+            .nameCn
+                font-size: 18px
+
+            .nameEn
+                font-size: 16px
+
+            .content
+                font-size: 14px
+
+
+    +mobileView
+        .svg-bg
+            transform: perspective(1000px) rotateZ(5deg) rotateY(-6deg) rotateX(0deg) translateX(-21%) skewX(-7deg) scaleY(0.8)
+            max-height: inherit
+            height: 1500px
+            top: 80px
+
+        .list
+            margin: 0 auto 150px
+            margin-top: 100px
+            flex-direction: column
+
+        .item
+            width: 100%
+            margin-bottom: 80px
+
+            .nameCn
+                font-size: 16px
+
+// be yourself
+.beYourself
+    color: $light-grey2
+    display: flex
+    justify-content: center
+    align-items: flex-start
+    padding-bottom: 150px
+    position: relative
+
+    svg
+        position: absolute
+        bottom: 70px
+        left: calc(50% - 523px)
+        width: 977px
+
+    img
+        position: absolute
+        bottom: 0
+        left: 0
+        width: 100%
+        height: auto
+        mix-blend-mode: darken
+        z-index: -1
+
+    h3
+        font-size: 60px
+        margin-right: 135px
+        font-weight: 600
+
+    .content
+        width: 420px
+
+        h4
+            font-size: 30px
+            white-space: nowrap
+            margin-top: 50px
+            line-height: 1.5
+            font-weight: 600
+
+        h5
+            font-size: 20px
+            margin-bottom: 20px
+            font-weight: 600
+
+        p
+            font-size: 16px
+            line-height: 1.3
+
+            &:nth-of-type(2)
+                font-size: 20px
+                margin: 30px 0 40px
+
+    +padView
+        svg
+            left: 6vw
+            bottom: 11vw
+            width: 80%
+
+        h3
+            font-size: 45px
+            margin-right: 100px
+
+        .content
+            width: 350px
+
+            h4
+                font-size: 24px
+
+            h5
+                font-size: 16px
+
+            p
+                font-size: 14px
+
+
+    +mobileView
+        flex-direction: column
+        padding: 0 10% 100px
+
+        svg
+            display: none
+
+        h3
+            font-size: 35px
+            margin: 0 0 30px
+            line-height: 1
+
+        .content
+            width: auto
+
+            h4
+                font-size: 16px
+
+.article
+    position: relative
+    margin-top: 300px
+    overflow: hidden
+    width: 100%
+
+    .svg-bg
+        transform: perspective(1000px) rotateZ(0deg) rotateY(6deg) rotateX(0deg) translateX(21%) skewX(7deg) scaleY(0.8)
+        max-height: 900px
+        position: absolute
+        transform-origin: top left
+        top: 25px
+        right: 0
+        z-index: -1
+
+    .post
+        max-width: 1140px
+        width: 100%
+        margin: 0 auto
+        display: flex
+        justify-content: space-between
+        align-items: center
+
+        & > img
+            margin-right: 60px
+            mix-blend-mode: overlay
+            width: 50%
+
+    .content
+        font-size: 16px
+        color: $light-grey3
+        line-height: 1.5
+        display: -webkit-box
+        -webkit-line-clamp: 20
+        -webkit-box-orient: vertical
+        overflow: hidden
+        text-overflow: ellipsis
+
+        img
+            display: none
+
+    .tag
+        color: $light-grey2
+        font-size: 20px
+
+    h2
+        font-weight: 600
+        color: $light-grey2
+        margin: 5px 0 35px
+
+    .paragraph
+        margin-left: 50px
+
+    +screenView
+        .post
+            width: 80%
+
+            img
+                width: 45%
+
+
+    +mobileView
+        margin-top: 80px
+
+        .svg-bg
+            transform: perspective(1000px) rotateZ(5deg) rotateY(-6deg) rotateX(0deg) translateX(21%) skewX(7deg) scaleY(0.8)
+            max-height: inherit
+            height: 800px
+            top: 80px
+
+        .post
+            & > img
+                display: none
+
+        .content
+            img
+                width: 100%
+                mix-blend-mode: overlay
+                display: inherit
+                margin-bottom: 20px
+
+        .paragraph
+            margin: 0
+
+//life
+
+.life
+    margin: 300px 0 200px
+
+    .content
+        font-size: 24px
+        color: $light-grey2
+        line-height: 1.5
+
+        +flexCenter
+
+    +padView
+        .content
+            font-size: 16px
+
+
+    +mobileView
+        margin: 150px 0 100px
+
+        .content
+            flex-direction: column
+            font-size: 14px
+
+            & > div
+                &:first-of-type
+                    transform: rotate(90deg) scale(0.8, 2)
+                    margin: 30px 0 30px
+
+                &:last-of-type
+                    transform: rotate(90deg) scale(0.8, 2)
+                    margin: 30px 0 30px

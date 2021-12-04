@@ -1,8 +1,10 @@
 import * as THREE from 'three';
 import { useEffect } from 'react';
 import styles from './index.module.sass';
+import useDeviceType, { DEVICE_DESKTOP } from 'utils/use-device-type';
 
 const Smoke = ({ className }) => {
+  const deviceType = useDeviceType();
   useEffect(() => {
     const debounce = (callback, duration) => {
       var timer;
@@ -230,6 +232,8 @@ const Smoke = ({ className }) => {
     };
     init();
   }, []);
+
+  if (deviceType !== DEVICE_DESKTOP) return <></>;
 
   return <canvas id="canvas-webgl" className={`${styles['canvas-webgl']} ${className}`} />;
 };
