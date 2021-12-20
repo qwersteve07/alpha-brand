@@ -3,12 +3,12 @@ import Top from './top';
 import Intro from './intro';
 import Articles from './articles';
 
-const Home = () => {
+const Home = ({ articlesData }) => {
   return (
     <Wrapper>
       <Top />
       <Intro />
-      <Articles />
+      <Articles data={articlesData} />
     </Wrapper>
   );
 };

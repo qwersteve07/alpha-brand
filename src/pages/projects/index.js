@@ -1,15 +1,13 @@
-import fs from 'fs';
 import Link from 'next/link';
-import matter from 'gray-matter';
 import styles from './index.module.sass';
 import Footer from 'components/footer';
 import Wrapper from 'components/wrapper';
 import Smoke from 'components/smoke';
 import Divider from 'components/divider';
-import { PROJECTS_POST_PATH } from 'config';
 import useDeviceType, { DEVICE_MOBILE } from 'utils/use-device-type';
+import axios from 'axios';
 
-const Projects = ({ projectsData, partnersData }) => {
+const Projects = ({ projectsData }) => {
   const deviceType = useDeviceType();
   const Top = () => {
     return (
@@ -58,19 +56,15 @@ const Projects = ({ projectsData, partnersData }) => {
     return (
       <section className={styles.projects}>
         {projectsData.map(data => {
-          const { title, define, id, projectName } = data;
+          const { title, slogan, id, cover } = data;
 
           return (
             <Link href={`/projects/[id]`} as={`/projects/${id}`} key={id}>
               <a className={styles.project}>
-                <div className={`${styles.image}`} style={{ backgroundImage: `url('/projects/${id}/${id}_1.jpg')` }} />
+                <div className={`${styles.image}`} style={{ backgroundImage: `url(${cover.url})` }} />
                 <div className={styles.info}>
                   <h4>{title}</h4>
-                  <p>
-                    {projectName}
-                    <br />
-                    {define}
-                  </p>
+                  <p>{slogan}</p>
                 </div>
               </a>
             </Link>
@@ -86,10 +80,10 @@ const Projects = ({ projectsData, partnersData }) => {
         <h2>Brand Partner</h2>
         <h3>品牌夥伴</h3>
         <ul>
-          {partnersData.map(image => {
+          {projectsData.map(item => {
             return (
-              <li key={image.id}>
-                <img src={image.file} alt={image.id} />
+              <li key={item.id}>
+                <img src={item.logo.url} alt={item.id} />
               </li>
             );
           })}
@@ -109,28 +103,15 @@ const Projects = ({ projectsData, partnersData }) => {
 };
 
 export async function getStaticProps() {
-  const projectFiles = fs.readdirSync(`${process.cwd()}/${PROJECTS_POST_PATH}`);
-  const projectsData = projectFiles.map(filename => {
-    const markdownWithMetadata = fs.readFileSync(`${PROJECTS_POST_PATH}/${filename}`).toString();
-
-    let { data } = matter(markdownWithMetadata);
-
-    return {
-      id: filename.replace('.md', ''),
+  const result = await axios.get('https://unme-backend.herokuapp.com/alpha-brand-project-posts').then(res => {
+    return res.data.map(data => ({
       ...data,
-    };
+    }));
   });
-
-  const partnersFiles = fs.readdirSync(`${process.cwd()}/public/partners`);
-  const partnersData = partnersFiles.map(name => ({
-    id: name.replace('.jpg', ''),
-    file: `/partners/${name}`,
-  }));
 
   return {
     props: {
-      projectsData,
-      partnersData,
+      projectsData: result,
     },
   };
 }

@@ -4,8 +4,11 @@ import { Controller } from 'react-scrollmagic';
 import Subscribe from 'components/subscribe';
 import Footer from 'components/footer';
 import SceneElement from 'components/scene-el';
+import { typeList } from 'config';
+import Button from 'components/button';
+import { PATH } from 'config';
 
-const Articles = () => {
+const Articles = ({ data }) => {
   const ArticleDesc = () => {
     return (
       <div className={styles.desc} id="article-desc">
@@ -36,6 +39,28 @@ const Articles = () => {
       </div>
     );
   };
+
+  const Posts = () => {
+    return (
+      <div className={styles.posts}>
+        <ul>
+          {data.map(item => {
+            return (
+              <li>
+                <div className={styles['post-image']} style={{ backgroundImage: `url(${item.cover.url})` }} />
+                <div className={styles.type}>{typeList[item.types]}</div>
+                <div className={styles.title}>{item.title}</div>
+              </li>
+            );
+          })}
+        </ul>
+        <Button className={styles.button} link={PATH.ARTICLES}>
+          All articles
+        </Button>
+      </div>
+    );
+  };
+
   return (
     <section className={styles.articles}>
       <Controller>
@@ -106,6 +131,7 @@ const Articles = () => {
             <ArticleDesc />
           </SceneElement>
         </div>
+        <Posts />
         <Subscribe />
         <Footer />
       </Controller>

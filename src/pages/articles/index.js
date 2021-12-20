@@ -1,21 +1,20 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import fs from 'fs';
-import matter from 'gray-matter';
 import classnames from 'classnames/bind';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import styles from './index.module.sass';
-import { PATH, ARTICLES_POST_PATH } from 'config';
+import { PATH } from 'config';
 import Wrapper from 'components/wrapper';
 import Footer from 'components/footer';
 import arrowfilter from 'images/arrow_filter.svg';
 import { ReactComponent as ArrowSlide } from 'images/arrow_slide.svg';
 import useDeviceType, { DEVICE_DESKTOP } from 'utils/use-device-type';
-import { dateSort } from 'utils/time-helper';
 import { typeList } from 'config';
+import axios from 'axios';
+
 const cx = classnames.bind(styles);
 
 const Catag = ({ currentCatag, setCurrentCatag }) => {
@@ -149,10 +148,7 @@ const FeatureSlider = ({ items }) => {
             <SwiperSlide key={item.id}>
               <Link href={`${PATH.ARTICLES}/[id]`} as={`${PATH.ARTICLES}/${item.id}`}>
                 <a>
-                  <div
-                    className={styles.image}
-                    style={{ backgroundImage: `url('/posts/articles/${item.id}/banner.jpg')` }}
-                  />
+                  <div className={styles.image} style={{ backgroundImage: `url(${item.cover.url})` }} />
                 </a>
               </Link>
             </SwiperSlide>
@@ -163,7 +159,7 @@ const FeatureSlider = ({ items }) => {
       </Swiper>
       <div className={styles.content}>
         <div className={styles.title}>{items[slideIndex].title}</div>
-        <div className={styles.intro}>{items[slideIndex].intro}</div>
+        <div className={styles.intro}>{items[slideIndex].description}</div>
       </div>
     </>
   );
@@ -177,15 +173,15 @@ const Articles = ({ articlesData }) => {
     return articlesData
       .filter(x => {
         if (currentCatag === 'all') return x;
-        return x.type === currentCatag;
+        return x.types === currentCatag;
       })
-      .map(article => {
+      .map(item => {
         return (
-          <li className={styles.article} key={article.id}>
-            <div className={styles.thumbnail}></div>
-            <div className={styles.type}>{typeList[article.type]}</div>
-            <div className={styles.title}>{article.title}</div>
-            <div className={styles.intro}>{article.intro}</div>
+          <li className={styles.article} key={item.id}>
+            <div className={styles.thumbnail} style={{ backgroundImage: `url(${item.cover.url})` }} />
+            <div className={styles.type}>{typeList[item.types]}</div>
+            <div className={styles.title}>{item.title}</div>
+            <div className={styles.intro}>{item.description}</div>
           </li>
         );
       });
@@ -216,21 +212,15 @@ const Articles = ({ articlesData }) => {
 };
 
 export async function getStaticProps() {
-  const files = fs.readdirSync(`${process.cwd()}/${ARTICLES_POST_PATH}`);
-  const articlesData = files.map(filename => {
-    const markdownWithMetadata = fs.readFileSync(`${ARTICLES_POST_PATH}/${filename}`).toString();
-
-    let { data } = matter(markdownWithMetadata);
-
-    return {
-      id: filename.replace('.md', ''),
+  const result = await axios.get('https://unme-backend.herokuapp.com/alpha-brand-article-posts').then(res => {
+    return res.data.map(data => ({
       ...data,
-    };
+    }));
   });
 
   return {
     props: {
-      articlesData: dateSort(articlesData),
+      articlesData: result,
     },
   };
 }
