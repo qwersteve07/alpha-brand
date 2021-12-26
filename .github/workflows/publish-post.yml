@@ -1,0 +1,21 @@
+name: Publist Post
+on:
+  repository_dispatch:
+    types: [publish_alpha_brand]
+jobs:
+  install-ssh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        # Make sure the @v0.5.4 matches the current version of the
+        # action
+      - uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.ALPHA_BRAND_SECRET_KEY }}
+      - name: install-host
+        run: ssh-keyscan -H ${{ secrets.ALPHA_BRAND_HOST }} >> ./ssh_config
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - name: go
+        run: yarn install && yarn sync && rm ./ssh_config

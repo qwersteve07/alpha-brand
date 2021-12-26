@@ -1,5 +1,3 @@
-import fs from 'fs';
-import matter from 'gray-matter';
 import Wrapper from 'components/wrapper';
 import Top from './top';
 import Model from './model';
@@ -9,9 +7,11 @@ import Article from './article';
 import Life from './life';
 import Footer from 'components/footer';
 import BottomNav from 'components/bottom-nav';
-import { PATH, ARTICLES_POST_PATH } from 'config';
+import { PATH } from 'config';
+import axios from 'axios';
+import sampleSize from 'lodash/sampleSize';
 
-const About = ({ loaded, articleData }) => {
+const About = ({ loaded, articlesData }) => {
   const navList = [
     {
       path: PATH.ARTICLES,
@@ -31,7 +31,7 @@ const About = ({ loaded, articleData }) => {
       <Model />
       <Core />
       <BeYourself />
-      <Article data={articleData} />
+      <Article data={sampleSize(articlesData, 1)[0]} />
       <Life />
       <BottomNav navList={navList} />
       <Footer />
@@ -40,20 +40,15 @@ const About = ({ loaded, articleData }) => {
 };
 
 export async function getStaticProps() {
-  const fileName = fs
-    .readdirSync(`${process.cwd()}/${ARTICLES_POST_PATH}`)
-    .find(x => x.includes('why-u-can-not-be-yourself'));
-
-  const markdownWithMetadata = fs.readFileSync(`${ARTICLES_POST_PATH}/${fileName}`).toString();
-  const { data, content } = matter(markdownWithMetadata);
+  const result = await axios.get('https://unme-backend.herokuapp.com/alpha-brand-article-posts').then(res => {
+    return res.data.map(data => ({
+      ...data,
+    }));
+  });
 
   return {
     props: {
-      articleData: {
-        id: fileName.replace('.md', ''),
-        ...data,
-        content,
-      },
+      articlesData: result,
     },
   };
 }

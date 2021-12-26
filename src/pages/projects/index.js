@@ -56,10 +56,10 @@ const Projects = ({ projectsData }) => {
     return (
       <section className={styles.projects}>
         {projectsData.map(data => {
-          const { title, slogan, id, cover } = data;
+          const { title, slogan, ID, cover } = data;
 
           return (
-            <Link href={`/projects/[id]`} as={`/projects/${id}`} key={id}>
+            <Link href={`/projects/[id]`} as={`/projects/${ID}`} key={ID}>
               <a className={styles.project}>
                 <div className={`${styles.image}`} style={{ backgroundImage: `url(${cover.url})` }} />
                 <div className={styles.info}>

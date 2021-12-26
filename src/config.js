@@ -5,6 +5,8 @@ export const PATH = {
   CONTACT: '/contact',
 };
 
+export const DOMAIN = 'https://alpha-brand.tw';
+
 // path
 export const PROJECTS_POST_PATH = 'src/posts/projects';
 export const ARTICLES_POST_PATH = 'src/posts/articles';

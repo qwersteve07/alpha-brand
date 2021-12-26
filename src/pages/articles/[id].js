@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import styles from './index.module.sass';
-import fs from 'fs';
-import path from 'path';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import matter from 'gray-matter';
 import Link from 'next/link';
-import { ARTICLES_POST_PATH, PATH, DOMAIN } from 'config';
+import { PATH, DOMAIN } from 'config';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import UseDeviceType, { DEVICE_MOBILE } from 'utils/use-device-type';
@@ -20,8 +18,9 @@ import { typeList } from 'config';
 import Footer from 'components/footer';
 import RelatePosts from 'components/relate-posts';
 const cx = classnames.bind(styles);
+import axios from 'axios';
 
-const ArticlePost = ({ loaded, data, content, id, relate }) => {
+const ArticlePost = ({ loaded, postData, relateData }) => {
   const deviceType = UseDeviceType();
   const [isInit, setIsInit] = useState(false);
   const router = useRouter();
@@ -34,7 +33,7 @@ const ArticlePost = ({ loaded, data, content, id, relate }) => {
   }, [loaded]);
 
   const RelateArticles = () => {
-    if (relate.length === 0) return <></>;
+    if (relateData.length === 0) return <></>;
     const RelateItem = ({ item }) => {
       const Content = () => {
         return (
@@ -74,13 +73,7 @@ const ArticlePost = ({ loaded, data, content, id, relate }) => {
   };
 
   const PostContent = () => {
-    return (
-      <>
-        <div className={`${styles.content} ${styles[data.type]}`}>
-          <ReactMarkdown rehypePlugins={[rehypeRaw]}>{content}</ReactMarkdown>
-        </div>
-      </>
-    );
+    return <></>;
   };
 
   const ShareIconGroup = () => {
@@ -153,18 +146,17 @@ const ArticlePost = ({ loaded, data, content, id, relate }) => {
     <Wrapper>
       <article className={styles.post}>
         <div className={styles.content}>
-          <h1>{data.title}</h1>
-          <div className={styles.type}>{typeList[data.type]}</div>
-          <picture>
-            <source srcSet={`/posts/articles/${id}/${id}_1.webp`} type="image/webp" />
-            <img src={`/posts/articles/${id}/${id}_1.jpg`} alt={`${id}_1`} loading="lazy" />
-          </picture>
+          <h1>{postData.title}</h1>
+          <div className={styles.type}>{typeList[postData.types]}</div>
+          <img src={postData.cover.url} alt={postData.name} />
           <div className={styles.words}>
-            <PostContent />
+            <div className={`${styles.content} ${styles[postData.types]}`}>
+              <ReactMarkdown rehypePlugins={[rehypeRaw]}>{postData.content}</ReactMarkdown>
+            </div>
           </div>
-          <RelatePosts type="articles" postData={relate} title="Relate Projects" />
         </div>
       </article>
+      <RelatePosts postData={relateData} title="Relate Articles" path={PATH.ARTICLES} />
       <section className={styles.share}>
         <div className={styles.title}>Share</div>
         <ShareIconGroup />
@@ -175,71 +167,31 @@ const ArticlePost = ({ loaded, data, content, id, relate }) => {
 };
 
 export const getStaticPaths = async () => {
-  const files = fs.readdirSync(ARTICLES_POST_PATH);
-  const paths = files.map(filename => {
-    const markdownWithMetadata = fs.readFileSync(`${ARTICLES_POST_PATH}/${filename}`).toString();
-    let { data } = matter(markdownWithMetadata);
-    return {
-      params: {
-        catag: data.type,
-        id: filename.replace('.md', ''),
-      },
-    };
-  });
+  const result = await axios.get('https://unme-backend.herokuapp.com/alpha-brand-article-posts');
+  const paths = result.data.map(item => ({ params: { id: item.ID } }));
 
-  return {
-    paths,
-    fallback: false,
-  };
+  return { paths, fallback: false };
 };
 
 export const getStaticProps = async ({ params: { id } }) => {
-  const files = fs.readdirSync(`${process.cwd()}/${ARTICLES_POST_PATH}`);
-  const articleData = files.map(filename => {
-    const markdownWithMetadata = fs.readFileSync(`${ARTICLES_POST_PATH}/${filename}`).toString();
-    let { data } = matter(markdownWithMetadata);
-
-    return {
-      id: filename.replace('.md', ''),
+  const result = await axios.get('https://unme-backend.herokuapp.com/alpha-brand-article-posts').then(res => {
+    return res.data.map(data => ({
       ...data,
-    };
+    }));
   });
+  const postData = result.find(item => item.ID === id);
 
-  const markdownWithMetadata = fs.readFileSync(path.join(ARTICLES_POST_PATH, id + '.md').toString());
-  const { data, content } = matter(markdownWithMetadata);
-
-  const relate = articleData.filter(article => {
-    let isSameCatag = () => {
-      if (Array.isArray(data.type)) {
-        if (Array.isArray(article.type)) {
-          return article.type.some(x => data.type.includes(x));
-        }
-        return data.type.includes(article.type);
-      }
-
-      if (Array.isArray(article.type)) {
-        return article.type.includes(data.type);
-      }
-      return article.type === data.type;
-    };
+  const relateData = result.filter(item => {
     return (
-      isSameCatag() && // 選擇同樣類別
-      article.title !== data.title && // 排除自己
-      article.id !== data.relate //  排除指定 relate
+      item.types === postData.types && // 選擇同樣類別
+      item.title !== postData.title // 排除自己
     );
   });
 
-  const relateAritcles = () => {
-    if (!data.relate) return sampleSize(relate, 2);
-    return [articleData.find(article => article.id === data.relate), ...sampleSize(relate, 1)];
-  };
-
   return {
     props: {
-      data,
-      content,
-      id,
-      relate: [],
+      postData,
+      relateData,
     },
   };
 };

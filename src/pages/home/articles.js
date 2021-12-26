@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styles from './index.module.sass';
 import { Controller } from 'react-scrollmagic';
 import Subscribe from 'components/subscribe';
@@ -7,8 +6,9 @@ import SceneElement from 'components/scene-el';
 import { typeList } from 'config';
 import Button from 'components/button';
 import { PATH } from 'config';
+import Link from 'next/link';
 
-const Articles = ({ data }) => {
+const Articles = ({ data = [] }) => {
   const ArticleDesc = () => {
     return (
       <div className={styles.desc} id="article-desc">
@@ -47,7 +47,9 @@ const Articles = ({ data }) => {
           {data.map(item => {
             return (
               <li>
-                <div className={styles['post-image']} style={{ backgroundImage: `url(${item.cover.url})` }} />
+                <Link href={`${PATH.ARTICLES}/[id]`} as={`${PATH.ARTICLES}/${item.id}`}>
+                  <a className={styles['post-image']} style={{ backgroundImage: `url(${item.cover.url})` }} />
+                </Link>
                 <div className={styles.type}>{typeList[item.types]}</div>
                 <div className={styles.title}>{item.title}</div>
               </li>

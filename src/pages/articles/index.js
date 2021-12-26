@@ -145,8 +145,8 @@ const FeatureSlider = ({ items }) => {
       <Swiper onSwiper={e => (featureSliderRef.current = e)} onSlideChange={onSlideChange}>
         {items.map(item => {
           return (
-            <SwiperSlide key={item.id}>
-              <Link href={`${PATH.ARTICLES}/[id]`} as={`${PATH.ARTICLES}/${item.id}`}>
+            <SwiperSlide key={item.ID}>
+              <Link href={`${PATH.ARTICLES}/[id]`} as={`${PATH.ARTICLES}/${item.ID}`}>
                 <a>
                   <div className={styles.image} style={{ backgroundImage: `url(${item.cover.url})` }} />
                 </a>
@@ -177,8 +177,10 @@ const Articles = ({ articlesData }) => {
       })
       .map(item => {
         return (
-          <li className={styles.article} key={item.id}>
-            <div className={styles.thumbnail} style={{ backgroundImage: `url(${item.cover.url})` }} />
+          <li className={styles.article} key={item.ID}>
+            <Link href={`${PATH.ARTICLES}/[id]`} as={`${PATH.ARTICLES}/${item.ID}`}>
+              <a className={styles.thumbnail} style={{ backgroundImage: `url(${item.cover.url})` }} />
+            </Link>
             <div className={styles.type}>{typeList[item.types]}</div>
             <div className={styles.title}>{item.title}</div>
             <div className={styles.intro}>{item.description}</div>

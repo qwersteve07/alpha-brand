@@ -1,21 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import fs from 'fs';
-import path from 'path';
-import sampleSize from 'lodash/sampleSize';
-import uniq from 'lodash/uniq';
 import styles from './index.module.sass';
-import matter from 'gray-matter';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import RelatePosts from 'components/relate-posts';
 import Wrapper from 'components/wrapper';
-import { PATH, PROJECTS_POST_PATH, ARTICLES_POST_PATH } from 'config';
+import { PATH } from 'config';
 import UseDeviceType, { DEVICE_MOBILE } from 'utils/use-device-type';
 import UseIntersect from 'utils/use-intersect';
+import Footer from 'components/footer';
+import axios from 'axios';
 
-const ProjectPost = ({ data, content, id, relate, article, imagesList }) => {
+const ProjectPost = ({ postData, relateData }) => {
   const deviceType = UseDeviceType();
   const isMobile = deviceType === DEVICE_MOBILE;
   const [isExpand, setIsExpand] = useState(false);
@@ -27,135 +24,66 @@ const ProjectPost = ({ data, content, id, relate, article, imagesList }) => {
   // element load
   useEffect(() => {
     const elements = galleryRef.current.childNodes;
-    setIntersectElements(elements, id);
+    setIntersectElements(elements, postData.ID);
   }, [router]);
-
-  const RelateProjects = () => {
-    let pickedProjects = sampleSize(relate, 2);
-    return pickedProjects.map(({ name, id }) => {
-      return (
-        <Link href={`${PATH.PROJECTS}/${id}`} key={id}>
-          <a className={styles.item}>
-            <div className={styles.image} style={{ backgroundImage: `url(/posts/projects/${id}/${id}_1.jpg)` }} />
-            <div className={styles.name}>{name}</div>
-          </a>
-        </Link>
-      );
-    });
-  };
-
-  const Readmore = () => {
-    if (!article) return '';
-    return (
-      <Link href={`${PATH.ARTICLES}/[id]`} as={`${PATH.ARTICLES}/${article.path}`}>
-        <a className={styles.readmore}>延伸閱讀 - {story.title}</a>
-      </Link>
-    );
-  };
 
   return (
     <Wrapper>
-      <article className={styles.article}>
+      <article className={styles['project-post']}>
         <div className={styles.container}>
           <div className={styles.content}>
             <div className={styles.left}>
-              <h1>{data.title}</h1>
-              <div className={styles.define}>{data.define}</div>
-              <div className={styles.slogan}>{data.slogan}</div>
+              <h1>{postData.title}</h1>
+              <div className={styles.define}>{postData.description}</div>
+              <div className={styles.slogan}>{postData.slogan}</div>
             </div>
             <div className={styles.right}>
-              <ReactMarkdown rehypePlugins={[rehypeRaw]}>{content}</ReactMarkdown>
-              <Readmore />
+              <h3>品牌夥伴</h3>
+              <ReactMarkdown rehypePlugins={[rehypeRaw]}>{postData.cooperate}</ReactMarkdown>
             </div>
           </div>
           <div className={styles.gallery} ref={galleryRef}>
-            {imagesList.map((image, key) => {
-              if (image.includes('gif')) {
-                return <img src={`/posts/projects/${id}/${image}`} key={key} alt={`${id}${key}`} loading="lazy" />;
-              }
-
-              return (
-                <picture key={key}>
-                  <source srcSet={`/posts/projects/${id}/${image}.webp`} type="image/webp" />
-                  <img src={`/posts/projects/${id}/${image}.jpg`} alt={`${id}${key}`} loading="lazy" />
-                </picture>
-              );
+            {postData.photos.map((image, key) => {
+              return <img src={image.url} alt={`${postData.ID}${key}`} loading="lazy" />;
             })}
           </div>
-          <RelatePosts type="projects" postData={relate} title="Relate Projects" />
         </div>
       </article>
+      <RelatePosts path={PATH.PROJECTS} postData={relateData} title="Relate Projects" />
+      <Footer />
     </Wrapper>
   );
 };
 
 export const getStaticPaths = async () => {
-  const files = fs.readdirSync(PROJECTS_POST_PATH);
-  const paths = files.map(filename => ({
-    params: {
-      id: filename.replace('.md', ''),
-    },
-  }));
+  const result = await axios.get('https://unme-backend.herokuapp.com/alpha-brand-project-posts');
+  const paths = result.data.map(item => ({ params: { id: item.ID } }));
 
-  return {
-    paths,
-    fallback: false,
-  };
+  return { paths, fallback: false };
 };
 
 export const getStaticProps = async ({ params: { id } }) => {
-  // get story content
-  const projectsFiles = fs.readdirSync(`${process.cwd()}/${PROJECTS_POST_PATH}`);
-  const projectsData = projectsFiles.map(filename => {
-    const markdownWithMetadata = fs.readFileSync(`${PROJECTS_POST_PATH}/${filename}`).toString();
-    let { data } = matter(markdownWithMetadata);
-
-    return {
-      id: filename.replace('.md', ''),
-      name: data.title,
-      tags: data.tags,
-    };
+  const result = await axios.get('https://unme-backend.herokuapp.com/alpha-brand-project-posts').then(res => {
+    return res.data.map(data => ({
+      ...data,
+      photos: data.photos.sort((a, b) => {
+        let aNum = a.name.split('_')[1].split('.')[0];
+        let bNum = b.name.split('_')[1].split('.')[0];
+        return aNum - bNum;
+      }),
+    }));
   });
+  const postData = result.find(item => item.ID === id);
 
-  // get project images
-  // const projectImages = fs.readdirSync(`${process.cwd()}/public/posts/projects/${id}`).filter(x => x !== '.DS_Store');
-  // const imagesList = uniq(projectImages.map(x => (!x.includes('gif') ? x.split('.')[0] : x))).sort((a, b) => {
-  //   let prev = a.split('.')[0].split('_')[1];
-  //   let next = b.split('.')[0].split('_')[1];
-  //   if (parseInt(prev) > parseInt(next)) return 1;
-  //   if (parseInt(prev) < parseInt(next)) return -1;
-  //   return 0;
-  // });
+  console.log(postData);
 
-  // get all stories for relate
-  // const markdownWithMetadata = fs.readFileSync(path.join(PROJECTS_POST_PATH, id + '.md').toString());
-  // const { data, content } = matter(markdownWithMetadata);
-  // const relate = projectsData
-  //   .filter(project => project.tags.some(tag => data.tags.indexOf(tag) !== -1))
-  //   .filter(project => project.name !== data.title);
-
-  const articlesFiles = fs.readdirSync(`${process.cwd()}/${ARTICLES_POST_PATH}`);
-  const articles = articlesFiles.map(file => {
-    const markdownWithMetadata = fs.readFileSync(`${ARTICLES_POST_PATH}/${file}`).toString();
-    let { data } = matter(markdownWithMetadata);
-    return {
-      title: data.title,
-      project: data.project,
-      path: file.replace('.md', ''),
-      link: data.link || '',
-    };
-  });
-
-  const article = articles.find(x => x.project === id) || '';
+  // get all projects for relate
+  const relateData = result.filter(item => item.types === postData.types && item.title !== postData.title);
 
   return {
     props: {
-      data: {},
-      content: {},
-      id,
-      relate: [],
-      article,
-      imagesList: [],
+      postData,
+      relateData,
     },
   };
 };
