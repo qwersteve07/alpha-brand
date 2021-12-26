@@ -85,21 +85,19 @@
 
     .creator
         font-size: 40px
-        top: 360px
-        left: 33%
-
+        top: 330px
+        left: 36%
+    .creator-content
+        top: 520px
+        left: 36%
     .title
         color: $light-grey2
         font-size: 24px
-        top: 540px
-        left: 33%
         letter-spacing: 4px
-
+        margin-bottom: 20px
     p
         color: $light-grey3
         font-size: 16px
-        top: 590px
-        left: 33%
         line-height: 1.5
 
     ul
@@ -108,19 +106,20 @@
         top: 350px
 
     .svg-line1
-        width: 65%
-        left: 10%
+        width: 60%
+        left: 13%
         top: 0
 
     .svg-line2
-        width: 65%
-        right: 12%
-        top: 300px
+        width: 53%
+        right: 17%
+        top: 315px
 
     .svg-block
-        width: 75%
-        left: 10%
+        width: 80%
+        left: 6%
         top: 130px
+
 
     +screenView
         height: 1000px
@@ -130,13 +129,10 @@
 
         .creator
             font-size: 30px
-            top: 26vw
-
-        .title
-            top: 39vw
-
-        p
-            top: 42vw
+            top: 24vw
+        
+        .creator-content
+            top: 35vw
 
         .svg-line2
             top: 22vw
@@ -220,7 +216,10 @@
     position: relative
 
     .line-container
-        z-index: 1
+        z-index: 3
+        height: 100%
+        width: 100%
+        position: relative
 
     .line
         position: absolute
@@ -274,7 +273,7 @@
             width: 102%
             top: 84%
 
-    .split-container
+    .images-container
         position: absolute
         top: 0
         left: 0
@@ -283,7 +282,7 @@
         width: 100%
         height: 100%
 
-    .split
+    .split-image
         flex: 1
         background: url("/alpha-intro.jpg")
         background-repeat: no-repeat
@@ -326,6 +325,7 @@
         background-image: url("/paper-bg.png")
         background-repeat: repeat-y
         background-size: cover
+        background-position: center
         mix-blend-mode: color-burn
         width: 100%
         height: 100%

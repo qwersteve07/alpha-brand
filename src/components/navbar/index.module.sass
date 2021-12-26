@@ -11,11 +11,13 @@
     top: 0
     left: 0
     z-index: 100
+    transform: translate3d(0,0,1px)
 
     &.scroll
         backdrop-filter: blur(12px)
         transition: all ease 0.4s
         box-shadow: 0 0px 30px rgba($black, 0.3)
+        -webkit-backdrop-filter: blur(12px)
 
     +padView
         padding: 20px 25px

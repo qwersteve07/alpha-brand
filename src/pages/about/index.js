@@ -11,20 +11,20 @@ import { PATH } from 'config';
 import axios from 'axios';
 import sampleSize from 'lodash/sampleSize';
 
-const About = ({ loaded, articlesData }) => {
-  const navList = [
-    {
-      path: PATH.ARTICLES,
-      image: '/contact_articles.jpg',
-      text: 'Articles',
-    },
-    {
-      path: PATH.ABOUT,
-      image: '/contact_about.jpg',
-      text: 'About',
-    },
-  ];
+const navList = [
+  {
+    path: PATH.ARTICLES,
+    image: '/contact_articles.jpg',
+    text: 'Articles',
+  },
+  {
+    path: PATH.ABOUT,
+    image: '/contact_about.jpg',
+    text: 'About',
+  },
+];
 
+const About = ({ loaded, articlesData }) => {
   return (
     <Wrapper>
       <Top loaded={loaded} />

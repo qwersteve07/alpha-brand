@@ -1,41 +1,56 @@
-import { useEffect } from 'react';
-import { Controller } from 'react-scrollmagic';
+import { useEffect, useRef } from 'react';
 import styles from './index.module.sass';
-import SceneElement from 'components/scene-el';
-import useResize from 'utils/use-resize';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+gsap.registerPlugin(ScrollTrigger);
 
 const BeYourself = () => {
-  const { windowHeight } = useResize();
+  const svgRef = useRef();
 
   useEffect(() => {
-    var myPath = document.getElementById('line');
-    var length = myPath.getTotalLength();
+    gsap
+      .timeline({
+        scrollTrigger: {
+          trigger: svgRef.current,
+          scrub: true,
+          start: 'top bottom-=200px',
+          end: 'top top-=200px',
+        },
+      })
+      .from(
+        svgRef.current,
+        {
+          strokeDashoffset: 1349,
+        },
+        0
+      )
+      .to(
+        svgRef.current,
+        {
+          strokeDashoffset: 0,
+        },
+        0
+      );
   }, []);
+
+  // useEffect(() => {
+  //   var myPath = document.getElementById('line');
+  //   var length = myPath.getTotalLength();
+  // }, []);
 
   return (
     <section className={styles.beYourself}>
       <img src="/photo.jpg" alt="photo" />
-      <Controller>
-        <SceneElement
-          triggerElement="#line"
-          triggerHook={0.6}
-          duration={windowHeight / 2}
-          process={{
-            from: {
-              strokeDasharray: 1349,
-              strokeDashoffset: 1349,
-            },
-            to: {
-              strokeDasharray: 1349,
-              strokeDashoffset: 0,
-            },
-          }}
-        >
-          <svg viewBox="0 0 977 688">
-            <path id="line" d="M42.6761 1H3L534.666 687H977" stroke="white" strokeWidth="2" fill="none" />
-          </svg>
-        </SceneElement>
-      </Controller>
+      <svg viewBox="0 0 977 688">
+        <path
+          ref={svgRef}
+          d="M42.6761 1H3L534.666 687H977"
+          stroke="white"
+          strokeWidth="2"
+          fill="none"
+          strokeDasharray="1349"
+        />
+      </svg>
       <h3>
         Do not to be
         <br />
