@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import styles from './index.module.sass';
 import unmeLogo from 'images/unme_logo.svg';
-import useDeviceType, { DEVICE_DESKTOP } from 'utils/use-device-type';
+import useDeviceType, { DEVICE_DESKTOP, DEVICE_MOBILE } from 'utils/use-device-type';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
@@ -9,7 +9,8 @@ gsap.registerPlugin(ScrollTrigger);
 const Intro = () => {
   const Content = () => {
     const device = useDeviceType();
-    const isNotDesktop = device !== DEVICE_DESKTOP;
+    const isMobile = device === DEVICE_MOBILE;
+    console.log(isMobile);
     const svgBlock = useRef();
     const svgLine1 = useRef();
     const svgLine1Polyline1 = useRef();
@@ -23,7 +24,7 @@ const Intro = () => {
 
     useEffect(() => {
       // block
-      gsap
+      let blockGasp = gsap
         .timeline({
           scrollTrigger: {
             trigger: svgBlock.current,
@@ -44,14 +45,16 @@ const Intro = () => {
           {
             transformPerspective: 1000,
             autoAlpha: 1,
-            rotationX: 5,
+            rotationX: isMobile ? -5 : 5,
+            rotationY: -4,
+            skewX: -8,
             translateZ: 0,
           },
           0
         );
 
       // line1
-      gsap
+      let line1Gsap = gsap
         .timeline({
           scrollTrigger: {
             trigger: svgLine1.current,
@@ -68,16 +71,17 @@ const Intro = () => {
           {
             autoAlpha: 1,
             rotationX: 3,
-            rotationY: 10,
-            rotationZ: -7,
-            skewY: 5,
+            rotationY: isMobile ? 18 : 10,
+            rotationZ: isMobile ? 0 : -7,
+            skewX: isMobile ? 5 : 0,
+            skewY: isMobile ? 0 : 5,
             transformPerspective: 1000,
             translateZ: 100,
           },
           0
         );
 
-      gsap
+      let line1Poly1Gsap = gsap
         .timeline({
           scrollTrigger: {
             trigger: svgLine1Polyline1.current,
@@ -89,7 +93,7 @@ const Intro = () => {
         .from(svgLine1Polyline1.current, { strokeDashoffset: 723 }, 0)
         .to(svgLine1Polyline1.current, { strokeDashoffset: 0 }, 0);
 
-      gsap
+      let line1Poly2Gsap = gsap
         .timeline({
           scrollTrigger: {
             trigger: svgLine1Polyline2.current,
@@ -101,8 +105,8 @@ const Intro = () => {
         .from(svgLine1Polyline2.current, { strokeDashoffset: 1657 }, 0)
         .to(svgLine1Polyline2.current, { strokeDashoffset: 0 }, 0);
 
-      // line2
-      gsap
+      // // line2
+      let line2Gsap = gsap
         .timeline({
           scrollTrigger: {
             trigger: svgLine2.current,
@@ -118,16 +122,18 @@ const Intro = () => {
           svgLine2.current,
           {
             autoAlpha: 1,
-            rotationX: 5,
-            rotationY: -20,
-            rotationZ: 5,
+            rotationX: isMobile ? 0 : 5,
+            rotationY: isMobile ? -17 : -20,
+            rotationZ: isMobile ? 7 : 5,
+            skewX: isMobile ? 3 : 0,
+            skewY: isMobile ? -5 : 0,
             transformPerspective: 1000,
             translateZ: 200,
           },
           0
         );
 
-      gsap
+      let line2GsapChild = gsap
         .timeline({
           scrollTrigger: {
             trigger: svgLine2.current.children[0],
@@ -139,8 +145,8 @@ const Intro = () => {
         .from(svgLine2.current.children[0], { strokeDashoffset: 2795 }, 0)
         .to(svgLine2.current.children[0], { strokeDashoffset: 0 }, 0);
 
-      // logo
-      gsap
+      // // logo
+      let logoGsap = gsap
         .timeline({
           scrollTrigger: {
             trigger: logoRef.current,
@@ -164,8 +170,8 @@ const Intro = () => {
           0
         );
 
-      // title1
-      gsap
+      // // title1
+      let title1Gsap = gsap
         .timeline({
           scrollTrigger: {
             trigger: title1Ref.current,
@@ -188,8 +194,8 @@ const Intro = () => {
           0
         );
 
-      // title2
-      gsap
+      // // title2
+      let title2Gsap = gsap
         .timeline({
           scrollTrigger: {
             trigger: title2Ref.current,
@@ -212,8 +218,8 @@ const Intro = () => {
           0
         );
 
-      // content
-      gsap
+      // // content
+      let contentGsap = gsap
         .timeline({
           scrollTrigger: {
             trigger: contentRef.current,
@@ -236,8 +242,8 @@ const Intro = () => {
           0
         );
 
-      // list
-      gsap
+      // // list
+      let listGsap = gsap
         .timeline({
           scrollTrigger: {
             trigger: listRef.current,
@@ -259,11 +265,67 @@ const Intro = () => {
           },
           0
         );
-    }, []);
 
-    if (isNotDesktop) {
+      return () => {
+        blockGasp.clear();
+        line1Gsap.clear();
+        line1Poly1Gsap.clear();
+        line1Poly2Gsap.clear();
+        line2Gsap.clear();
+        line2GsapChild.clear();
+        logoGsap.clear();
+        title1Gsap.clear();
+        title2Gsap.clear();
+        contentGsap.clear();
+        listGsap.clear();
+      };
+    }, [isMobile]);
+
+    if (isMobile) {
       return (
         <div className={styles.block1}>
+          <img ref={logoRef} src={unmeLogo} alt="unme" className={styles['unme-logo']} />
+          <svg viewBox="0 0 1120.6 615.727" className={styles['svg-block']} ref={svgBlock}>
+            <rect width="1120.6" height="615.727" fill="#3c3230" />
+          </svg>
+          <svg ref={svgLine1} viewBox="0 0 245.85 135.11" className={styles['svg-line1']}>
+            <polyline
+              id="line1-rect"
+              x="1"
+              y="1"
+              fill="none"
+              stroke="#fff"
+              strokeMiterlimit="10"
+              strokeDasharray="685"
+              points="245.35 97.27 245.35 134.61 0.5 134.61 0.5 0.5 245.35 0.5 245.35 25.02"
+            />
+          </svg>
+          <svg ref={svgLine2} viewBox="0 0 904.241 497.748" className={styles['svg-line2']}>
+            <rect
+              id="line2-rect"
+              x="1"
+              y="1"
+              width="902.241"
+              height="495.748"
+              fill="none"
+              stroke="#fff"
+              strokeMiterlimit="10"
+              strokeWidth="2"
+              strokeDasharray="2795"
+            />
+          </svg>
+          <h3 ref={title1Ref} className={styles.founder}>
+            Founder of
+            <br />
+            UNME DESIGN
+            <br />
+            <span>非我設計創辦人</span>
+          </h3>
+          <h3 ref={title2Ref} className={styles.creator}>
+            Brand Dimension
+            <br />
+            Creator
+          </h3>
           <p>
             品牌維度是透過多領域設計團隊，
             <br />

@@ -11,9 +11,9 @@ const useDeviceType = () => {
     const handleResize = () => {
       if (window.innerWidth > 1024 && device !== 'desktop') {
         setDevice('desktop');
-      } else if (window.innerWidth <= 1024 && window.innerWidth > 768 && device !== 'pad') {
+      } else if (window.innerWidth <= 1024 && window.innerWidth > 767 && device !== 'pad') {
         setDevice('pad');
-      } else if (window.innerWidth <= 768 && device !== 'mobile') {
+      } else if (window.innerWidth <= 767 && device !== 'mobile') {
         setDevice('mobile');
       }
     };

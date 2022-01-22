@@ -1,0 +1,20 @@
+@import styles/variables
+@import styles/extends
+
+.back-to-top
+    width: 50px
+    height: 50px
+    cursor: pointer
+    position: fixed
+    bottom: 100px
+    right: 60px
+    opacity: 0
+    transition: 0.2s ease all
+    z-index: 100
+    &.show
+        opacity: 1
+        transition: 0.2s ease all
+    +mobileView
+        width: 30px
+        right: 30px
+        bottom: 30px

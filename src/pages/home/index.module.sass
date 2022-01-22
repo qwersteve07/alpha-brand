@@ -55,13 +55,14 @@
     width: 100%
     max-width: 1440px
     margin: 0 auto 200px
+    padding: 0 40px
 
     +mobileView
         margin: 50px auto 70px
 
 .block1
     width: 100%
-    height: 1200px
+    height: 1000px
     position: relative
     margin: 200px auto 0
 
@@ -122,40 +123,71 @@
 
 
     +screenView
-        height: 1000px
+        height: 65vw
 
         h3
             font-size: 30px
 
         .creator
             font-size: 30px
-            top: 24vw
+            top: 21vw
+        .founder
+            top: 6vw
         
         .creator-content
-            top: 35vw
+            top: 33vw
+
 
         .svg-line2
             top: 22vw
 
         ul
-            right: 11%
-            top: 26vw
+            right: 6%
+            top: 23vw
+        p
+            font-size: 14px
+        
 
 
     +mobileView
         height: auto
-        margin: 50px 40px
         width: auto
         font-size: 12px
+        margin-top: 50px
+        .unme-logo
+            top: 20px
+            left: 13%
+            width: 24px
+            z-index: 1
 
-        & > *
-            position: static
-
+        .founder
+            top: 10vw
+            left: auto
+            right: 0%
+            font-size:  16px
+            span
+                font-size: 12px
+        .creator
+            left: 6%
+            font-size: 16px
+            top: 50vw
         p
+            padding-top: 80vw
             font-size: 12px
-
+            position: static
         ul
             margin-top: 25px
+            position: static
+        .svg-block
+            top: 10vw
+            left: 10vw
+        .svg-line1
+            width: 84%
+            left: 13%
+        .svg-line2  
+            width: 64%
+            top: 37vw
+            right: 24vw
 
 .block2
     display: flex
@@ -176,6 +208,8 @@
         font-size: 20px
         font-weight: normal
         margin: 30px 0 10px
+        &:first-of-type
+            margin-top: 0
 
     p
         font-size: 16px
@@ -197,18 +231,16 @@
 
     +mobileView
         flex-direction: column
-        margin: 50px 40px
-
+        margin: 50px 0
         h4, h3
             font-size: 16px
 
         p
-            font-size: 14px
-
-        .image
-            margin: 100px 0 40px
+            font-size: 14px 
+        .content
+            margin: 0
             width: 100%
-            height: calc((100vw - 80px) * 1.4)
+
 
 .image
     width: 505px
@@ -315,6 +347,19 @@
 
         &:nth-of-type(9)
             background-position: 100% 0
+    +screenView
+        margin-right: 50px
+        width: 50%
+        height: calc((50vw - 70px) * 1.4)
+    +mobileView
+        margin: 40px auto
+        width: 90%
+        height: calc((100vw - 125px) * 1.4)
+        .line
+            &:nth-of-type(1)
+                left: -10%
+                width: 120%
+
 
 .articles
     color: $light-grey2
@@ -401,6 +446,7 @@
     justify-content: center
     align-items: flex-start
     padding-top: 260px
+    padding: 260px 40px 0
 
     .guide-image
         position: relative
@@ -425,6 +471,7 @@
 
     h4
         font-size: 24px
+        
 
     p
         margin: 20px 0 45px
@@ -434,14 +481,14 @@
     .sub
         font-size: 16px
         color: $light-grey3
-
+    +screenView
+        padding-top: 100px
     +mobileView
         padding-top: 50px
         flex-direction: column
-        margin: 0 40px
 
         .guide-image
-            transform: translateX(15px)
+            margin: 0 auto
 
         h3
             right: -10px
