@@ -100,7 +100,6 @@ const Intro = () => {
           translateY: 0,
         });
 
-      // // title1
       let title1Gsap = gsap
         .timeline({
           scrollTrigger: {
@@ -119,7 +118,6 @@ const Intro = () => {
           translateY: 0,
         });
 
-      // // title2
       let title2Gsap = gsap
         .timeline({
           scrollTrigger: {
@@ -138,7 +136,6 @@ const Intro = () => {
           translateY: 0,
         });
 
-      // // content
       let contentGsap = gsap
         .timeline({
           scrollTrigger: {
@@ -157,7 +154,6 @@ const Intro = () => {
           translateY: 0,
         });
 
-      // // list
       let listGsap = gsap
         .timeline({
           scrollTrigger: {

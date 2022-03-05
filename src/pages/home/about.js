@@ -6,6 +6,7 @@ import useDeviceType, { DEVICE_DESKTOP, DEVICE_MOBILE } from 'utils/use-device-t
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+import useBrowser from 'utils/browser-helper';
 gsap.registerPlugin(ScrollTrigger);
 
 const splitLinesData = [
@@ -21,6 +22,7 @@ const splitLinesData = [
   },
   {
     length: 410,
+    reverse: true,
   },
   {
     length: 320,
@@ -42,80 +44,82 @@ const splitImagesData = [
   {
     translateY: 0,
     rotationX: -1,
-    translateZ: 100,
   },
   {
     translateX: -4,
     translateY: 15,
     rotationX: -2,
-    translateZ: 100,
   },
   {
     translateY: -15,
     rotationX: -3,
-    translateZ: 100,
   },
   {
     translateY: -2,
     rotationX: 1,
-    translateZ: 100,
   },
   {
     translateY: 2,
     rotationX: -1,
-    translateZ: 100,
   },
   {
     translateY: 5,
     translateX: -5,
     rotationX: -1,
-    translateZ: 100,
   },
   {
     translateX: 5,
     translateY: 25,
-    translateZ: 100,
   },
   {
     translateY: 2,
     rotationX: 2,
-    translateZ: 100,
   },
   {
     translateX: 5,
     translateY: -3,
-    translateZ: 10,
   },
 ];
 
 const Images = () => {
   const splitLinesRef = useRef([]);
   const splitImagesRef = useRef([]);
+  const browser = useBrowser();
+  const isSafari = browser === 'Safari';
 
   useEffect(() => {
-    splitLinesRef.current.forEach((el, index) => {
+    let splitLineGsap = splitLinesRef.current.map((el, index) => {
+      const svgPath = el.children[0];
       let currentLineData = splitLinesData[index];
-      gsap
+      return gsap
         .timeline({
           scrollTrigger: {
-            trigger: el,
+            trigger: svgPath,
             scrub: true,
             start: 'top bottom',
             end: 'top center',
           },
         })
-        .from(el, {
-          strokeDashoffset: currentLineData.reverse ? -currentLineData.length : currentLineData.length,
-          translateZ: 10000,
+        .from(svgPath, {
+          strokeDashoffset: currentLineData.length,
         })
-        .to(el, {
+        .to(svgPath, {
           strokeDashoffset: 0,
-          translateZ: 10000,
         });
     });
 
-    splitImagesRef.current.forEach((el, index) => {
-      gsap
+    let splitImageGsap = splitImagesRef.current.map((el, index) => {
+      const elParams = () => {
+        if (isSafari) {
+          let newParams = splitImagesData[index];
+          delete newParams['rotationX'];
+          return newParams;
+        } else {
+          return splitImagesData[index];
+        }
+      };
+
+      return gsap
         .timeline({
           scrollTrigger: {
             trigger: el,
@@ -129,10 +133,19 @@ const Images = () => {
         })
         .to(el, {
           autoAlpha: 1,
-          ...splitImagesData[index],
+          ...elParams(),
         });
     });
-  }, []);
+
+    return () => {
+      splitLineGsap.forEach(el => {
+        el.clear();
+      });
+      splitImageGsap.forEach(el => {
+        el.clear();
+      });
+    };
+  }, [isSafari]);
 
   const addToLinesRefs = el => {
     if (el && !splitLinesRef.current.includes(el)) {
@@ -155,6 +168,13 @@ const Images = () => {
       </div>
       <div className={styles['line-container']}>
         {splitLinesData.map((item, index) => {
+          let reversePathParams = () => {
+            if (item.reverse) {
+              return `M${item.length},0 0,0`;
+            } else {
+              return `M 0,0 L ${item.length},0`;
+            }
+          };
           return (
             <svg
               key={index}
@@ -164,7 +184,7 @@ const Images = () => {
               strokeDasharray={item.length}
               ref={addToLinesRefs}
             >
-              <line y1="1" x2={item.length} y2="1" fill="none" stroke="#fff" strokeMiterlimit="10" />
+              <path d={reversePathParams()} fill="none" stroke="#fff" />
             </svg>
           );
         })}
