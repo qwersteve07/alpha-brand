@@ -42,40 +42,49 @@ const splitImagesData = [
   {
     translateY: 0,
     rotationX: -1,
+    translateZ: 100,
   },
   {
     translateX: -4,
     translateY: 15,
     rotationX: -2,
+    translateZ: 100,
   },
   {
     translateY: -15,
     rotationX: -3,
+    translateZ: 100,
   },
   {
     translateY: -2,
     rotationX: 1,
+    translateZ: 100,
   },
   {
     translateY: 2,
     rotationX: -1,
+    translateZ: 100,
   },
   {
     translateY: 5,
     translateX: -5,
     rotationX: -1,
+    translateZ: 100,
   },
   {
     translateX: 5,
     translateY: 25,
+    translateZ: 100,
   },
   {
     translateY: 2,
     rotationX: 2,
+    translateZ: 100,
   },
   {
     translateX: 5,
     translateY: -3,
+    translateZ: 10,
   },
 ];
 
@@ -95,21 +104,14 @@ const Images = () => {
             end: 'top center',
           },
         })
-        .from(
-          el,
-          {
-            strokeDashoffset: currentLineData.reverse ? -currentLineData.length : currentLineData.length,
-          },
-          0
-        )
-        .to(
-          el,
-          {
-            strokeDashoffset: 0,
-            translateZ: 100,
-          },
-          0
-        );
+        .from(el, {
+          strokeDashoffset: currentLineData.reverse ? -currentLineData.length : currentLineData.length,
+          translateZ: 10000,
+        })
+        .to(el, {
+          strokeDashoffset: 0,
+          translateZ: 10000,
+        });
     });
 
     splitImagesRef.current.forEach((el, index) => {
@@ -122,21 +124,13 @@ const Images = () => {
             end: 'top top',
           },
         })
-        .from(
-          el,
-          {
-            autoAlpha: 0,
-          },
-          0
-        )
-        .to(
-          el,
-          {
-            autoAlpha: 1,
-            ...splitImagesData[index],
-          },
-          0
-        );
+        .from(el, {
+          autoAlpha: 0,
+        })
+        .to(el, {
+          autoAlpha: 1,
+          ...splitImagesData[index],
+        });
     });
   }, []);
 
@@ -154,6 +148,11 @@ const Images = () => {
 
   return (
     <div className={styles.image}>
+      <div className={styles['images-container']}>
+        {splitImagesData.map(item => (
+          <div className={styles['split-image']} id={item.id} ref={addToImagesRefs} />
+        ))}
+      </div>
       <div className={styles['line-container']}>
         {splitLinesData.map((item, index) => {
           return (
@@ -169,11 +168,6 @@ const Images = () => {
             </svg>
           );
         })}
-      </div>
-      <div className={styles['images-container']}>
-        {splitImagesData.map(item => (
-          <div className={styles['split-image']} id={item.id} ref={addToImagesRefs} />
-        ))}
       </div>
     </div>
   );
@@ -195,23 +189,14 @@ const Intro = () => {
           end: 'top top',
         },
       })
-      .from(
-        contentRef.current,
-        {
-          autoAlpha: 0,
-          translateY: 150,
-        },
-        0
-      )
-      .to(
-        contentRef.current,
-        {
-          autoAlpha: 1,
-          translateY: 0,
-          translateZ: 100,
-        },
-        0
-      );
+      .from(contentRef.current, {
+        autoAlpha: 0,
+        translateY: 150,
+      })
+      .to(contentRef.current, {
+        autoAlpha: 1,
+        translateY: 0,
+      });
   }, []);
 
   return (

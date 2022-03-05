@@ -7,8 +7,11 @@ import { typeList } from 'config';
 import Button from 'components/button';
 import { PATH } from 'config';
 import Link from 'next/link';
+import { REVOLUTION_LIVING } from 'config';
+import { BRAND_DIMENSION } from 'config';
+import { STARTUP_VALUES } from 'config';
 
-const Articles = ({ data = [] }) => {
+const Articles = () => {
   const ArticleDesc = () => {
     return (
       <div className={styles.desc} id="article-desc">
@@ -40,18 +43,35 @@ const Articles = ({ data = [] }) => {
     );
   };
 
+  const postData = [
+    {
+      id: REVOLUTION_LIVING,
+      image: '/home-living-comingsoon.jpg',
+    },
+    {
+      id: BRAND_DIMENSION,
+      image: '/home-brand-comingsoon.jpg',
+    },
+    {
+      id: STARTUP_VALUES,
+      image: '/home-starup-comingsoon.jpg',
+    },
+  ];
+
   const Posts = () => {
     return (
       <div className={styles.posts}>
         <ul>
-          {data.map(item => {
+          {postData.map(data => {
             return (
               <li>
-                <Link href={`${PATH.ARTICLES}/[id]`} as={`${PATH.ARTICLES}/${item.id}`}>
-                  <a className={styles['post-image']} style={{ backgroundImage: `url(${item.cover.url})` }} />
+                <Link href={`${PATH.ARTICLES}?catag=${data.id}`}>
+                  <a className={styles['post-image']} style={{ backgroundImage: `url(${data.image})` }} />
                 </Link>
-                <div className={styles.type}>{typeList[item.types]}</div>
-                <div className={styles.title}>{item.title}</div>
+                <Link href={`${PATH.ARTICLES}?catag=${data.id}`}>
+                  <a className={styles.type}>{typeList[data.id]}</a>
+                </Link>
+                <div className={styles.title}>Comming soon...</div>
               </li>
             );
           })}
@@ -134,7 +154,7 @@ const Articles = ({ data = [] }) => {
           </SceneElement>
         </div>
         <Posts />
-        <Subscribe />
+        {/* <Subscribe /> */}
         <Footer />
       </Controller>
     </section>

@@ -7,22 +7,8 @@ import Article from './article';
 import Life from './life';
 import Footer from 'components/footer';
 import BottomNav from 'components/bottom-nav';
-import { PATH } from 'config';
 import axios from 'axios';
 import sampleSize from 'lodash/sampleSize';
-
-const navList = [
-  {
-    path: PATH.ARTICLES,
-    image: '/contact_articles.jpg',
-    text: 'Articles',
-  },
-  {
-    path: PATH.ABOUT,
-    image: '/contact_about.jpg',
-    text: 'About',
-  },
-];
 
 const About = ({ loaded, articlesData }) => {
   return (
@@ -33,7 +19,7 @@ const About = ({ loaded, articlesData }) => {
       <BeYourself />
       <Article data={sampleSize(articlesData, 1)[0]} />
       <Life />
-      <BottomNav navList={navList} />
+      <BottomNav navList={['articles', 'projects']} />
       <Footer />
     </Wrapper>
   );

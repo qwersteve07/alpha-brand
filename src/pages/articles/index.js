@@ -6,14 +6,14 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import styles from './index.module.sass';
-import { PATH } from 'config';
 import Wrapper from 'components/wrapper';
 import Footer from 'components/footer';
 import arrowfilter from 'images/arrow_filter.svg';
 import { ReactComponent as ArrowSlide } from 'images/arrow_slide.svg';
 import useDeviceType, { DEVICE_DESKTOP } from 'utils/use-device-type';
-import { typeList } from 'config';
 import axios from 'axios';
+import { PATH, typeList, BRAND_DIMENSION, STARTUP_VALUES } from 'config';
+import CommingSoon from 'components/comming-soon';
 
 const cx = classnames.bind(styles);
 
@@ -165,29 +165,34 @@ const FeatureSlider = ({ items }) => {
   );
 };
 
+const ArticlesList = ({ catag, article, loaded }) => {
+  if (catag === BRAND_DIMENSION || catag === STARTUP_VALUES) {
+    return <CommingSoon loaded={loaded} />;
+  }
+
+  return article
+    .filter(x => {
+      if (catag === 'all') return x;
+      return x.types === catag;
+    })
+    .map(item => {
+      return (
+        <li className={styles.article} key={item.ID}>
+          <Link href={`${PATH.ARTICLES}/[id]`} as={`${PATH.ARTICLES}/${item.ID}`}>
+            <a className={styles.thumbnail} style={{ backgroundImage: `url(${item.cover.url})` }} />
+          </Link>
+          <div className={styles.type}>{typeList[item.types]}</div>
+          <div className={styles.title}>{item.title}</div>
+          <div className={styles.intro}>{item.description}</div>
+        </li>
+      );
+    });
+};
+
 const Articles = ({ articlesData }) => {
+  const [articleSwitchLoaded, setArticleSwitchLoaded] = useState(false);
   const [currentCatag, setCurrentCatag] = useState('all');
   const featurePosts = articlesData.filter(x => x.feature);
-
-  const ArticlesList = () => {
-    return articlesData
-      .filter(x => {
-        if (currentCatag === 'all') return x;
-        return x.types === currentCatag;
-      })
-      .map(item => {
-        return (
-          <li className={styles.article} key={item.ID}>
-            <Link href={`${PATH.ARTICLES}/[id]`} as={`${PATH.ARTICLES}/${item.ID}`}>
-              <a className={styles.thumbnail} style={{ backgroundImage: `url(${item.cover.url})` }} />
-            </Link>
-            <div className={styles.type}>{typeList[item.types]}</div>
-            <div className={styles.title}>{item.title}</div>
-            <div className={styles.intro}>{item.description}</div>
-          </li>
-        );
-      });
-  };
 
   return (
     <Wrapper>
@@ -201,9 +206,11 @@ const Articles = ({ articlesData }) => {
             key={currentCatag}
             addEndListener={(node, done) => node.addEventListener('transitionend', done, false)}
             classNames="fade"
+            onEntered={() => setArticleSwitchLoaded(true)}
+            onExit={() => setArticleSwitchLoaded(false)}
           >
             <ul className={styles.list}>
-              <ArticlesList />
+              <ArticlesList article={articlesData} catag={currentCatag} loaded={articleSwitchLoaded} />
             </ul>
           </CSSTransition>
         </SwitchTransition>

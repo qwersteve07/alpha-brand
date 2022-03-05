@@ -5,14 +5,14 @@ import About from './about';
 import Articles from './articles';
 import BackToTop from 'components/back-to-top';
 
-const Home = ({ articlesData }) => {
+const Home = () => {
   return (
     <Wrapper>
       <BackToTop />
       <Top />
       <Intro />
       <About />
-      <Articles data={articlesData} />
+      <Articles />
     </Wrapper>
   );
 };

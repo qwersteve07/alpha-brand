@@ -10,12 +10,9 @@ const Intro = () => {
   const Content = () => {
     const device = useDeviceType();
     const isMobile = device === DEVICE_MOBILE;
-    console.log(isMobile);
-    const svgBlock = useRef();
-    const svgLine1 = useRef();
-    const svgLine1Polyline1 = useRef();
-    const svgLine1Polyline2 = useRef();
-    const svgLine2 = useRef();
+    const introBlockRef = useRef();
+    const introLineOneRef = useRef();
+    const introLineTwoRef = useRef();
     const logoRef = useRef();
     const title1Ref = useRef();
     const title2Ref = useRef();
@@ -23,129 +20,68 @@ const Intro = () => {
     const listRef = useRef();
 
     useEffect(() => {
-      // block
-      let blockGasp = gsap
+      // console.log(document.getElementById('x').getTotalLength());
+
+      let introBlockGsap = gsap
         .timeline({
           scrollTrigger: {
-            trigger: svgBlock.current,
+            trigger: introBlockRef.current,
             scrub: true,
             start: 'top bottom',
             end: 'top top',
           },
         })
-        .from(
-          svgBlock.current,
-          {
-            autoAlpha: 0,
-          },
-          0
-        )
-        .to(
-          svgBlock.current,
-          {
-            transformPerspective: 1000,
-            autoAlpha: 1,
-            rotationX: isMobile ? -5 : 5,
-            rotationY: -4,
-            skewX: -8,
-            translateZ: 0,
-          },
-          0
-        );
+        .from(introBlockRef.current, { autoAlpha: 0 })
+        .to(introBlockRef.current, { autoAlpha: 1 });
 
-      // line1
-      let line1Gsap = gsap
+      let introLineOneGsap = gsap
         .timeline({
           scrollTrigger: {
-            trigger: svgLine1.current,
+            trigger: introLineOneRef.current,
             scrub: true,
             start: 'top bottom',
             end: 'top top',
           },
         })
-        .from(svgLine1.current, {
-          autoAlpha: 0,
-        })
-        .to(
-          svgLine1.current,
-          {
-            autoAlpha: 1,
-            rotationX: 3,
-            rotationY: isMobile ? 18 : 10,
-            rotationZ: isMobile ? 0 : -7,
-            skewX: isMobile ? 5 : 0,
-            skewY: isMobile ? 0 : 5,
-            transformPerspective: 1000,
-            translateZ: 100,
-          },
-          0
-        );
+        .from(introLineOneRef.current, { autoAlpha: 0 })
+        .to(introLineOneRef.current, { autoAlpha: 1 });
 
-      let line1Poly1Gsap = gsap
+      let introLineOnePathGsap = gsap
         .timeline({
           scrollTrigger: {
-            trigger: svgLine1Polyline1.current,
+            trigger: introLineOneRef.current.children[0],
             scrub: true,
             start: 'top bottom',
             end: 'top center',
           },
         })
-        .from(svgLine1Polyline1.current, { strokeDashoffset: 723 }, 0)
-        .to(svgLine1Polyline1.current, { strokeDashoffset: 0 }, 0);
+        .from(introLineOneRef.current.children[0], { strokeDashoffset: 2328 })
+        .to(introLineOneRef.current.children[0], { strokeDashoffset: 0 });
 
-      let line1Poly2Gsap = gsap
+      let introLineTwoGsap = gsap
         .timeline({
           scrollTrigger: {
-            trigger: svgLine1Polyline2.current,
-            scrub: true,
-            start: 'top bottom',
-            end: 'top center',
-          },
-        })
-        .from(svgLine1Polyline2.current, { strokeDashoffset: 1657 }, 0)
-        .to(svgLine1Polyline2.current, { strokeDashoffset: 0 }, 0);
-
-      // // line2
-      let line2Gsap = gsap
-        .timeline({
-          scrollTrigger: {
-            trigger: svgLine2.current,
+            trigger: introLineTwoRef.current,
             scrub: true,
             start: 'top bottom',
             end: 'top top',
           },
         })
-        .from(svgLine2.current, {
-          autoAlpha: 0,
-        })
-        .to(
-          svgLine2.current,
-          {
-            autoAlpha: 1,
-            rotationX: isMobile ? 0 : 5,
-            rotationY: isMobile ? -17 : -20,
-            rotationZ: isMobile ? 7 : 5,
-            skewX: isMobile ? 3 : 0,
-            skewY: isMobile ? -5 : 0,
-            transformPerspective: 1000,
-            translateZ: 200,
-          },
-          0
-        );
+        .from(introLineTwoRef.current, { autoAlpha: 0 })
+        .to(introLineTwoRef.current, { autoAlpha: 1 });
 
-      let line2GsapChild = gsap
+      let introLineTwoPathGsap = gsap
         .timeline({
           scrollTrigger: {
-            trigger: svgLine2.current.children[0],
+            trigger: introLineTwoRef.current.children[0],
             scrub: true,
             start: 'top bottom',
             end: 'top center',
           },
         })
-        .from(svgLine2.current.children[0], { strokeDashoffset: 2795 }, 0)
-        .to(svgLine2.current.children[0], { strokeDashoffset: 0 }, 0);
+        .from(introLineTwoRef.current.children[0], { strokeDashoffset: 2661 })
+        .to(introLineTwoRef.current.children[0], { strokeDashoffset: 0 });
 
-      // // logo
       let logoGsap = gsap
         .timeline({
           scrollTrigger: {
@@ -158,17 +94,11 @@ const Intro = () => {
         .from(logoRef.current, {
           autoAlpha: 0,
           translateY: 50,
-          translateZ: 100,
         })
-        .to(
-          logoRef.current,
-          {
-            autoAlpha: 1,
-            translateY: 0,
-            translateZ: 100,
-          },
-          0
-        );
+        .to(logoRef.current, {
+          autoAlpha: 1,
+          translateY: 0,
+        });
 
       // // title1
       let title1Gsap = gsap
@@ -184,15 +114,10 @@ const Intro = () => {
           autoAlpha: 0,
           translateY: 50,
         })
-        .to(
-          title1Ref.current,
-          {
-            autoAlpha: 1,
-            translateY: 0,
-            translateZ: 100,
-          },
-          0
-        );
+        .to(title1Ref.current, {
+          autoAlpha: 1,
+          translateY: 0,
+        });
 
       // // title2
       let title2Gsap = gsap
@@ -208,15 +133,10 @@ const Intro = () => {
           autoAlpha: 0,
           translateY: 50,
         })
-        .to(
-          title2Ref.current,
-          {
-            autoAlpha: 1,
-            translateY: 0,
-            translateZ: 100,
-          },
-          0
-        );
+        .to(title2Ref.current, {
+          autoAlpha: 1,
+          translateY: 0,
+        });
 
       // // content
       let contentGsap = gsap
@@ -232,15 +152,10 @@ const Intro = () => {
           autoAlpha: 0,
           translateY: 50,
         })
-        .to(
-          contentRef.current,
-          {
-            autoAlpha: 1,
-            translateY: 0,
-            translateZ: 100,
-          },
-          0
-        );
+        .to(contentRef.current, {
+          autoAlpha: 1,
+          translateY: 0,
+        });
 
       // // list
       let listGsap = gsap
@@ -256,23 +171,17 @@ const Intro = () => {
           autoAlpha: 0,
           translateY: 50,
         })
-        .to(
-          listRef.current,
-          {
-            autoAlpha: 1,
-            translateY: 0,
-            translateZ: 100,
-          },
-          0
-        );
+        .to(listRef.current, {
+          autoAlpha: 1,
+          translateY: 0,
+        });
 
       return () => {
-        blockGasp.clear();
-        line1Gsap.clear();
-        line1Poly1Gsap.clear();
-        line1Poly2Gsap.clear();
-        line2Gsap.clear();
-        line2GsapChild.clear();
+        introBlockGsap.clear();
+        introLineOneGsap.clear();
+        introLineOnePathGsap.clear();
+        introLineTwoGsap.clear();
+        introLineTwoPathGsap.clear();
         logoGsap.clear();
         title1Gsap.clear();
         title2Gsap.clear();
@@ -281,111 +190,117 @@ const Intro = () => {
       };
     }, [isMobile]);
 
-    if (isMobile) {
-      return (
-        <div className={styles.block1}>
-          <img ref={logoRef} src={unmeLogo} alt="unme" className={styles['unme-logo']} />
-          <svg viewBox="0 0 1120.6 615.727" className={styles['svg-block']} ref={svgBlock}>
-            <rect width="1120.6" height="615.727" fill="#3c3230" />
-          </svg>
-          <svg ref={svgLine1} viewBox="0 0 245.85 135.11" className={styles['svg-line1']}>
-            <polyline
-              id="line1-rect"
-              x="1"
-              y="1"
-              fill="none"
-              stroke="#fff"
-              strokeMiterlimit="10"
-              strokeDasharray="685"
-              points="245.35 97.27 245.35 134.61 0.5 134.61 0.5 0.5 245.35 0.5 245.35 25.02"
-            />
-          </svg>
-          <svg ref={svgLine2} viewBox="0 0 904.241 497.748" className={styles['svg-line2']}>
-            <rect
-              id="line2-rect"
-              x="1"
-              y="1"
-              width="902.241"
-              height="495.748"
-              fill="none"
-              stroke="#fff"
-              strokeMiterlimit="10"
-              strokeWidth="2"
-              strokeDasharray="2795"
-            />
-          </svg>
-          <h3 ref={title1Ref} className={styles.founder}>
-            Founder of
-            <br />
-            UNME DESIGN
-            <br />
-            <span>非我設計創辦人</span>
-          </h3>
-          <h3 ref={title2Ref} className={styles.creator}>
-            Brand Dimension
-            <br />
-            Creator
-          </h3>
-          <p>
-            品牌維度是透過多領域設計團隊，
-            <br />
-            銜接品牌策略、市場調查、數據分析，
-            <br />
-            建立使用者經驗建的獨特體驗，
-            <br />
-            讓品牌形象一致性提到最高，
-            <br />
-            並作出精準的互動溝通，
-            <br />
-            藉此讓設計能夠實際幫助品牌營運的串連。
-            <br />
-            是的，就是這麼複雜。
-          </p>
-          <ul>
-            <li>#革命式生活</li>
-            <li>#品牌空間設計師</li>
-          </ul>
-        </div>
-      );
-    }
+    // if (isMobile) {
+    //   return (
+    //     <div className={styles.block1}>
+    //       <img ref={logoRef} src={unmeLogo} alt="unme" className={styles['unme-logo']} />
+    //       <svg viewBox="0 0 1120.6 615.727" className={styles['svg-block']} ref={introBlockRef}>
+    //         <rect width="1120.6" height="615.727" fill="#3c3230" />
+    //       </svg>
+    //       <svg ref={introLineOneRef} viewBox="0 0 245.85 135.11" className={styles['svg-line1']}>
+    //         <polyline
+    //           id="line1-rect"
+    //           x="1"
+    //           y="1"
+    //           fill="none"
+    //           stroke="#fff"
+    //           strokeMiterlimit="10"
+    //           strokeDasharray="685"
+    //           points="245.35 97.27 245.35 134.61 0.5 134.61 0.5 0.5 245.35 0.5 245.35 25.02"
+    //         />
+    //       </svg>
+    //       <svg ref={introLineTwoRef} viewBox="0 0 904.241 497.748" className={styles['svg-line2']}>
+    //         <rect
+    //           x="1"
+    //           y="1"
+    //           width="902.241"
+    //           height="495.748"
+    //           fill="none"
+    //           stroke="#fff"
+    //           strokeMiterlimit="10"
+    //           strokeWidth="2"
+    //         />
+    //       </svg>
+    //       <h3 ref={title1Ref} className={styles.founder}>
+    //         Founder of
+    //         <br />
+    //         UNME DESIGN
+    //         <br />
+    //         <span>非我設計創辦人</span>
+    //       </h3>
+    //       <h3 ref={title2Ref} className={styles.creator}>
+    //         Brand Dimension
+    //         <br />
+    //         Creator
+    //       </h3>
+    //       <p>
+    //         品牌維度是透過多領域設計團隊，
+    //         <br />
+    //         銜接品牌策略、市場調查、數據分析，
+    //         <br />
+    //         建立使用者經驗建的獨特體驗，
+    //         <br />
+    //         讓品牌形象一致性提到最高，
+    //         <br />
+    //         並作出精準的互動溝通，
+    //         <br />
+    //         藉此讓設計能夠實際幫助品牌營運的串連。
+    //         <br />
+    //         是的，就是這麼複雜。
+    //       </p>
+    //       <ul>
+    //         <li>#革命式生活</li>
+    //         <li>#品牌空間設計師</li>
+    //       </ul>
+    //     </div>
+    //   );
+    // }
 
     return (
       <div className={styles.block1}>
-        <svg viewBox="0 0 1120.6 615.727" className={styles['svg-block']} ref={svgBlock}>
-          <rect width="1120.6" height="615.727" fill="#3c3230" />
+        <svg
+          className={styles['intro-block']}
+          ref={introBlockRef}
+          width="1100"
+          height="569"
+          viewBox="0 0 1100 569"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M1031.61 569L1100 0L43.345 19.263L0 499.357L1031.61 569Z" fill="#3C3230" />
         </svg>
-        <svg ref={svgLine1} viewBox="0 0 895.5 488.1" className={styles['svg-line1']}>
-          <polyline
-            ref={svgLine1Polyline1}
-            points="894.5,373.5 894.5,487.1 284.9,487.1"
-            fill="none"
+
+        <svg
+          ref={introLineOneRef}
+          width="933"
+          height="485"
+          viewBox="0 0 933 485"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className={styles['intro-line-one']}
+        >
+          <path
             stroke="#fff"
-            strokeMiterlimit="10"
             strokeWidth="2"
-            strokeDasharray="723"
-          />
-          <polyline
-            ref={svgLine1Polyline2}
-            points="215.4,487.1 1,487.1 1,1 894.5,1 894.5,64.1 "
-            fill="none"
-            stroke="#fff"
-            strokeMiterlimit="10"
-            strokeWidth="2"
-            strokeDasharray="1657"
+            strokeDasharray="2328"
+            d="M897.7,64.1l-4.1-45.7L2.3,2L59.8,482l243.9-16.5 M919.8,309.1l10.3,114l-547.6,37"
           />
         </svg>
-        <svg ref={svgLine2} viewBox="0 0 904.241 497.748" className={styles['svg-line2']}>
-          <rect
-            id="line2-rect"
-            x="1"
-            y="1"
-            width="902.241"
-            height="495.748"
-            fill="none"
-            stroke="#fff"
-            strokeMiterlimit="10"
-            strokeWidth="2"
-            strokeDasharray="2795"
+
+        <svg
+          width="933"
+          height="485"
+          ref={introLineTwoRef}
+          viewBox="0 0 933 485"
+          fill="none"
+          className={styles['intro-line-two']}
+        >
+          <path
+            id="x"
+            strokeDasharray="2661"
+            d="M1.1,424l872.2,59L931.1,1L37.8,17.3L1.1,424"
+            stroke="white"
+            stroke-width="2"
           />
         </svg>
 

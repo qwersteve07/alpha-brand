@@ -6,6 +6,7 @@ import Smoke from 'components/smoke';
 import Divider from 'components/divider';
 import useDeviceType, { DEVICE_MOBILE } from 'utils/use-device-type';
 import axios from 'axios';
+import BottomNav from 'components/bottom-nav';
 
 const Projects = ({ projectsData }) => {
   const deviceType = useDeviceType();
@@ -95,8 +96,9 @@ const Projects = ({ projectsData }) => {
     <Wrapper>
       <Smoke className={styles.smoke} />
       <Top />
-      <ProjectsList />
+      {/* <ProjectsList /> */}
       <PartnersList />
+      <BottomNav navList={['articles', 'about']} />
       <Footer />
     </Wrapper>
   );
