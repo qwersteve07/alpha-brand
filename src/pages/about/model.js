@@ -37,7 +37,7 @@ const Model = () => {
   }, []);
 
   return (
-    <section className={styles.model}>
+    <section className={styles.model} id="model">
       <div className={styles.title}>
         <h3>維度模型</h3>
         <span>Dimension Model</span>

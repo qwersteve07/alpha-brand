@@ -21,6 +21,7 @@
         color: white
     .group
         +flexSpaceBetween
+
     .posts
         +flexCenter
 
@@ -31,6 +32,7 @@
                 margin-right: 20px
 
     .image
+        background-repeat: no-repeat
         background-size: 100% auto
         background-position: center
         padding-top: 67%
@@ -42,3 +44,16 @@
     .name
         font-size: 16px
         line-height: 1.2
+    +mobileView
+        .group
+            flex-direction: column
+            & > div
+                &:first-of-type
+                    transform: rotate(90deg) scale(0.8, 2)
+                    margin: 30px 0 30px
+
+                &:last-of-type
+                    transform: rotate(90deg) scale(0.8, 2)
+                    margin: 30px 0 30px
+
+

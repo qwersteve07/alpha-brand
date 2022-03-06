@@ -3,15 +3,18 @@ import sampleSize from 'lodash/sampleSize';
 import styles from './index.module.sass';
 import WMdecoration from 'components/wm-decoration';
 import { typeList } from 'config';
+import useDeviceType, { DEVICE_MOBILE } from 'utils/use-device-type';
 
 const RelatePosts = ({ title, postData, path }) => {
   if (postData.length === 0) return <></>;
+
+  const deviceType = useDeviceType();
 
   return (
     <div className={styles.relate}>
       <div className={styles.title}>{title}</div>
       <div className={styles.group}>
-        <WMdecoration width={220} />
+        <WMdecoration width={deviceType === DEVICE_MOBILE ? 100 : 220} />
         <div className={styles.posts}>
           {sampleSize(postData, 2).map(item => {
             return (
@@ -25,7 +28,7 @@ const RelatePosts = ({ title, postData, path }) => {
             );
           })}
         </div>
-        <WMdecoration width={220} reverse={true} />
+        <WMdecoration width={deviceType === DEVICE_MOBILE ? 100 : 220} reverse={true} />
       </div>
     </div>
   );

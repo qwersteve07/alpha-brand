@@ -183,8 +183,8 @@ export const getStaticProps = async ({ params: { id } }) => {
 
   const relateData = result.filter(item => {
     return (
-      item.types === postData.types && // 選擇同樣類別
-      item.title !== postData.title // 排除自己
+      item.types === postData.types // 選擇同樣類別
+      // item.title !== postData.title // 排除自己
     );
   });
 

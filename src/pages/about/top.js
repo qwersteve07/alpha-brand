@@ -48,7 +48,7 @@ const Top = ({}) => {
         <h1>Alpha</h1>
         <H2Text />
         <span>Did you find out the Beta?</span>
-        <Button className={styles.button} link={PATH.ABOUT}>
+        <Button className={styles.button} link="#model">
           Enter
         </Button>
       </div>
