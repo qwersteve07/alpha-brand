@@ -11,13 +11,16 @@ import 'styles/base.sass';
 
 // add css-transition-group css
 import 'pages/articles/transition.css';
+import { DOMAIN, serviceId } from 'config';
+import { useRouter } from 'next/router';
 
 const App = ({ Component, pageProps }) => {
+  const router = useRouter();
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     smoothscroll.polyfill();
-    emailjs.init('alpha-brand');
+    emailjs.init(serviceId);
   }, []);
 
   // set init css variable
@@ -39,6 +42,31 @@ const App = ({ Component, pageProps }) => {
   useEffect(() => {
     setLoaded(true);
   }, []);
+
+  // let isPost = router.query?.id;
+
+  // const pageImage = () => {
+  //   if (isPost) {
+  //     return pageProps.postData.cover?.url;
+  //   } else if (isStory) {
+  //     return 'https://unmedesign.co/og-image-stories.jpg';
+  //   } else {
+  //     switch (router.pathname) {
+  //       case PATH.ABOUT:
+  //         return 'https://unmedesign.co/og-image-about.jpg';
+  //       case PATH.SERVICE:
+  //         return 'https://unmedesign.co/og-image-service.jpg';
+  //       case PATH.CONTACT:
+  //         return 'https://unmedesign.co/og-image-contact.jpg';
+  //       case PATH.STORIES:
+  //         return 'https://unmedesign.co/og-image-stories.jpg';
+  //       case PATH.SOCIAL_SERVICE:
+  //         return 'https://unmedesign.co/og-image-social-service.jpg';
+  //       default:
+  //         return 'https://unmedesign.co/og-image.jpg';
+  //     }
+  //   }
+  // };
 
   // const pageTitle = () => {
   //   const unmeDesign = 'UNME DESIGN';
@@ -97,10 +125,11 @@ const App = ({ Component, pageProps }) => {
   //   }
   // };
 
-  // let ogTitle = pageTitle();
-  // let ogDescription = pageDescription();
-  // let ogUrl = `${DOMAIN}${router.asPath}`;
-  // let ogImage = pageImage();
+  let ogTitle = '品牌空間設計師 Alpha｜設計是能夠計算價值的產業，更能夠改變世界。';
+  let ogDescription =
+    '品牌空間設計是藉由維度的不同審核品牌每一個接觸點的設計方式，不但需要跨領域設計的技能提供具有分析性的品牌策略，並將其數據化後進入後續的維度舖陳。將企業的每一個時間軸、對外形象來客製出一致性的品牌感受外，更藉由這些內容延伸出未來的品牌經營策略。';
+  let ogUrl = `${DOMAIN}${router.asPath}`;
+  let ogImage = `${DOMAIN}/og-image.jpg`;
 
   return (
     <>
@@ -115,23 +144,23 @@ const App = ({ Component, pageProps }) => {
               'user-scalable=no,width=device-width,initial-scale=1,shrink-to-fit=no,minimum-scale=1,maximum-scale=1,viewport-fit=cover',
           },
         ]}
-        // title={ogTitle}
-        // description={ogDescription}
-        // openGraph={{
-        //   url: ogUrl,
-        //   title: ogTitle,
-        //   description: ogDescription,
-        //   locale: 'zh_TW',
-        //   type: 'website',
-        //   images: [
-        //     {
-        //       url: ogImage,
-        //       width: 1200,
-        //       height: 630,
-        //     },
-        //   ],
-        //   site_name: 'ALPHA BRAND',
-        // }}
+        title={ogTitle}
+        description={ogDescription}
+        openGraph={{
+          url: ogUrl,
+          title: ogTitle,
+          description: ogDescription,
+          locale: 'zh_TW',
+          type: 'website',
+          images: [
+            {
+              url: ogImage,
+              width: 1200,
+              height: 630,
+            },
+          ],
+          site_name: ogTitle,
+        }}
       />
       <Component {...pageProps} loaded={loaded} />
     </>

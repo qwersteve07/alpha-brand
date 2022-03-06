@@ -5,14 +5,11 @@ export const PATH = {
   CONTACT: '/contact',
 };
 
-export const DOMAIN = 'https://alpha-brand.tw';
+export const DOMAIN = 'https://alphabrand.tw';
 
 // path
 export const PROJECTS_POST_PATH = 'src/posts/projects';
 export const ARTICLES_POST_PATH = 'src/posts/articles';
-
-// mailjs
-export const serviceId = 'alpha_brand';
 
 export const REVOLUTION_LIVING = 'revolution_living';
 export const BRAND_DIMENSION = 'brand_dimension';
@@ -24,3 +21,8 @@ export const typeList = {
   [BRAND_DIMENSION]: '品牌維度・Brand Dimension',
   [STARTUP_VALUES]: '一個人的世界・Startup & Values',
 };
+
+// emailjs
+export const serviceId = 'alpha-brand';
+export const userId = 'user_4mY5wOOGGrgwMptW1b5zE';
+export const mailTemplateId = 'template_408xf4h';

@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import styles from './index.module.sass';
 import { Controller } from 'react-scrollmagic';
 import Subscribe from 'components/subscribe';
@@ -12,7 +13,7 @@ import { BRAND_DIMENSION } from 'config';
 import { STARTUP_VALUES } from 'config';
 
 const Articles = () => {
-  const ArticleDesc = () => {
+  const ArticleDesc = forwardRef((_, ref) => {
     return (
       <div className={styles.desc} id="article-desc">
         <h4>設計 / 革命 / 旅行</h4>
@@ -41,7 +42,7 @@ const Articles = () => {
         </p>
       </div>
     );
-  };
+  });
 
   const postData = [
     {
@@ -64,7 +65,7 @@ const Articles = () => {
         <ul>
           {postData.map(data => {
             return (
-              <li>
+              <li key={data.id}>
                 <Link href={`${PATH.ARTICLES}?catag=${data.id}`}>
                   <a className={styles['post-image']} style={{ backgroundImage: `url(${data.image})` }} />
                 </Link>

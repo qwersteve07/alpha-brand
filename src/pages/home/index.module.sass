@@ -118,12 +118,25 @@
 
     .intro-block
         width: 80%
-        left: 6%
-        top: 130px
+        left: 10%
+        top: 13%
 
 
     +screenView
         height: 65vw
+
+        .intro-line-one
+            width: 75%
+
+
+        .intro-line-two
+            width: 75%
+            right: 0%
+            top: 27%
+
+        .intro-block
+            width: 70%
+            left: 15%
 
         h3
             font-size: 30px
@@ -135,20 +148,29 @@
             top: 6vw
         
         .creator-content
-            top: 33vw
+            top: 55%
 
-
-        .intro-line-two
-            top: 22vw
 
         ul
             right: 6%
             top: 23vw
         p
             font-size: 14px
-        
+    +padView
+        margin-top: 85px
+        .intro-line-two
+            top: 32%
+        .unme-logo
+            top: 20%
 
-
+        .founder
+            top: 20%
+            font-size: 25px
+        .creator
+            font-size: 25px
+            top: 45%
+        .creator-content
+            top: 60%
     +mobileView
         height: auto
         width: auto
@@ -170,7 +192,7 @@
         .creator
             left: 6%
             font-size: 16px
-            top: 50vw
+            top: 35%
         p
             padding-top: 80vw
             font-size: 12px
@@ -179,15 +201,16 @@
             margin-top: 25px
             position: static
         .intro-block
-            top: 10vw
-            left: 10vw
+            width: 100%
+            top: 11%
+            left: 2%
         .intro-line-one
-            width: 84%
-            left: 13%
+            width: 100%
+            left: 0
         .intro-line-two
-            width: 64%
-            top: 37vw
-            right: 24vw
+            width: 90%
+            top: 26%
+            right: 15%
 
 .block2
     display: flex
@@ -356,6 +379,9 @@
         margin: 40px auto
         width: 90%
         height: calc((100vw - 125px) * 1.4)
+        .split-image
+            z-index: -1
+
         .line
             &:nth-of-type(1)
                 left: -10%

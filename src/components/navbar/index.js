@@ -66,7 +66,7 @@ const Navbar = () => {
     return () => {
       clearAllBodyScrollLocks();
     };
-  }, [menuOpen]);
+  }, []);
 
   const onTriggerMenu = () => {
     setMenuOpen(!menuOpen);
@@ -143,9 +143,9 @@ const Navbar = () => {
       </ul>
       <div className={styles.right}>
         <SocialIcon />
-        <div className={styles.search}>
+        {/* <div className={styles.search}>
           <img src={iconSearch} alt="search" />
-        </div>
+        </div> */}
       </div>
       <div className={cx({ trigger: true, on: menuOpen })} onClick={onTriggerMenu} />
     </nav>

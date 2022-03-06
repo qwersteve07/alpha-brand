@@ -38,8 +38,8 @@ const Core = () => {
   const existRef = useRef([]);
 
   useEffect(() => {
-    existRef.current.forEach((el, index) => {
-      gsap
+    let existGsap = existRef.current.map((el, index) => {
+      return gsap
         .timeline({
           scrollTrigger: {
             trigger: el,
@@ -60,6 +60,12 @@ const Core = () => {
           0
         );
     });
+
+    return () => {
+      existGsap.forEach(el => {
+        el.clear();
+      });
+    };
   }, []);
 
   const addToRefs = el => {

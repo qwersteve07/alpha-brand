@@ -8,30 +8,35 @@ import Smoke from 'components/smoke';
 import Footer from 'components/footer';
 import validator from 'validator';
 import emailjs from 'emailjs-com';
+import { mailTemplateId, serviceId, userId } from 'config';
 
 const Contact = () => {
   const [formValue, setFormValue] = useState({});
   const [formError, setFormError] = useState({});
   const [buttonLoading, setButtonLoading] = useState(false);
+  const [response, setResponse] = useState(false);
+  const [responseMessage, setResponseMessage] = useState({});
 
   const formList = [
     {
-      id: 'Name',
+      id: 'name',
+      label: 'Name',
       value: formValue.name,
       error: formError.name,
     },
     {
-      id: 'Email',
-      label: '信箱',
+      id: 'email',
+      label: 'Email',
       inputType: 'email',
       value: formValue.email,
       error: formError.email,
     },
     {
+      id: 'comment',
       type: 'textarea',
-      id: 'Your Message',
-      value: formValue.message,
-      error: formError.message,
+      label: 'Your Message',
+      value: formValue.comment,
+      error: formError.comment,
     },
   ];
 
@@ -40,28 +45,30 @@ const Contact = () => {
 
     const preCheck = () => {
       const pass = formList.every(item => {
-        if (item.id === 'Email') {
-          return validator.isEmail(formValue.email ?? '');
+        if (item.id === 'email') {
+          return validator.isEmail(formValue.email || '');
         }
-        return formValue[item];
+        return formValue[item.id];
       });
 
       if (!pass) {
         setFormError(prev => {
+          let result = {};
           // 將 object 轉為 array 後處理
-          const newDataEntries = formList.map(item => {
-            if (item === 'Email') {
-              return [item, !validator.isEmail(formValue.email)];
+          formList.forEach(item => {
+            if (item.id === 'email') {
+              return (result['email'] = !validator.isEmail(formValue.email || ''));
             }
-            return [item, !formValue[item]];
+            return (result[item.id] = !formValue[item.id]);
           });
 
           return {
             ...prev,
-            ...Object.fromEntries(newDataEntries),
+            ...result,
           };
         });
       }
+      return pass;
     };
 
     if (!preCheck()) return;
@@ -70,15 +77,13 @@ const Contact = () => {
 
     setButtonLoading(true);
 
-    return;
-
     emailjs
-      .send(serviceId, mailTemplateId, filterFormData(), userID)
+      .send(serviceId, mailTemplateId, formValue, userId)
       .then(() => {
         setResponse(true);
         setResponseMessage(() => ({
           title: '信件發送成功',
-          desc: '我們已收到您的需求，請耐心等候，我們將儘速與您聯繫！',
+          desc: '已收到您的需求，請耐心等候，將儘速與您聯繫！',
         }));
         localStorage.clear();
       })
@@ -98,8 +103,25 @@ const Contact = () => {
     setFormValue(prev => ({ ...prev, [id]: value }));
   };
 
+  const Dialog = () => {
+    return (
+      <>
+        <div className={styles.mask} onClick={() => setResponse(false)}>
+          <div className={styles.dialog}>
+            <div className={styles.title}>{responseMessage.title}</div>
+            <div className={styles.desc}>{responseMessage.desc}</div>
+            <Button theme="black" onClick={() => setResponse(false)}>
+              關閉
+            </Button>
+          </div>
+        </div>
+      </>
+    );
+  };
+
   return (
     <Wrapper>
+      {response && <Dialog />}
       <Smoke className={styles.smoke} />
       <div className={styles.top}>
         <h1>
@@ -143,15 +165,15 @@ const Contact = () => {
         </svg>
         <form>
           {formList.map(item => {
-            const { type, id, value, inputType, error } = item;
+            const { type, id, label, value, inputType, error } = item;
             if (type === 'textarea') {
               return (
                 <div className={styles['textarea-container']}>
-                  <label htmlFor={id}>{id}</label>
+                  <label htmlFor={id}>{label}</label>
                   <div key={id} className={styles.textarea}>
                     <textarea id={id} value={value} onChange={e => onChange(id, e.target.value)} />
-                    {error && <span className={styles['error-msg']}>請確實輸入欄位</span>}
                   </div>
+                  {error && <span className={styles['error-msg']}>請確實輸入欄位</span>}
                 </div>
               );
             }
@@ -161,14 +183,14 @@ const Contact = () => {
                   id={id}
                   type={inputType || 'text'}
                   value={value}
-                  placeholder={id}
+                  placeholder={label}
                   onChange={e => onChange(id, e.target.value)}
                 />
                 {error && <span className={styles['error-msg']}>請輸入{label}</span>}
               </React.Fragment>
             );
           })}
-          <Button onClick={onSend} className={styles.button}>
+          <Button onClick={onSend} className={styles.button} loading={buttonLoading}>
             Send
           </Button>
         </form>

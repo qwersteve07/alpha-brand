@@ -86,6 +86,8 @@ const Images = () => {
   const splitImagesRef = useRef([]);
   const browser = useBrowser();
   const isSafari = browser === 'Safari';
+  const device = useDeviceType();
+  const isMobile = device === DEVICE_MOBILE;
 
   useEffect(() => {
     let splitLineGsap = splitLinesRef.current.map((el, index) => {
@@ -97,7 +99,7 @@ const Images = () => {
             trigger: svgPath,
             scrub: true,
             start: 'top bottom',
-            end: 'top center',
+            end: isMobile ? '+=300' : '+=600',
           },
         })
         .from(svgPath, {
@@ -125,7 +127,7 @@ const Images = () => {
             trigger: el,
             scrub: true,
             start: 'top bottom',
-            end: 'top top',
+            end: isMobile ? '+=300' : '+=600',
           },
         })
         .from(el, {
@@ -163,7 +165,7 @@ const Images = () => {
     <div className={styles.image}>
       <div className={styles['images-container']}>
         {splitImagesData.map(item => (
-          <div className={styles['split-image']} id={item.id} ref={addToImagesRefs} />
+          <div key={item.id} className={styles['split-image']} id={item.id} ref={addToImagesRefs} />
         ))}
       </div>
       <div className={styles['line-container']}>
@@ -206,7 +208,7 @@ const Intro = () => {
           trigger: contentRef.current,
           scrub: true,
           start: 'top bottom',
-          end: 'top top',
+          end: '+=600',
         },
       })
       .from(contentRef.current, {
