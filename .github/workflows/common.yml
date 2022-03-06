@@ -19,4 +19,4 @@ jobs:
         with:
           node-version: 14
       - name: go
-        run: yarn install && yarn sync && rm ./ssh_config
+        run: yarn install && yarn sync
