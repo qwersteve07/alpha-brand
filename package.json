@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "postbuild": "node src/sitemap.xml.build.js",
     "dev": "next dev",
     "build": "next build",
     "export": "next export",
     "start": "next start",
+    "sync": "yarn build && yarn export && bash ./sync.sh",
     "lint": "next lint"
   },
   "dependencies": {
