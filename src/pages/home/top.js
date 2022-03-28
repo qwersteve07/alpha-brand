@@ -7,6 +7,7 @@ const Top = () => {
   useEffect(() => {
     const canvas = document.getElementById('canvas');
     const photoList = [];
+    const isDesktop = window.innerWidth > 1023;
     const img = new Image();
     img.src = '/alpha-potrait.jpg';
 
@@ -33,7 +34,7 @@ const Top = () => {
     const init = () => {
       canvasWidth = window.innerWidth;
       canvasHeight = () => {
-        if (window.innerWidth > 1023) {
+        if (isDesktop) {
           return window.innerWidth * 0.55 > window.innerHeight ? window.innerHeight : window.innerWidth * 0.55;
         } else {
           return window.innerWidth * 1.25 > window.innerHeight ? window.innerHeight : window.innerWidth * 1.25;
@@ -41,9 +42,9 @@ const Top = () => {
       };
       canvas.width = canvasWidth;
       canvas.height = canvasHeight();
-      let imgWidth = window.innerWidth > 1023 ? canvasWidth * 0.45 : canvasWidth * 0.575;
+      let imgWidth = isDesktop ? canvasWidth * 0.45 : canvasWidth * 0.575;
 
-      if (window.innerWidth > 1023) {
+      if (isDesktop) {
         photoList[0] = photoInit(0);
         photoList[1] = photoInit(canvasWidth * 0.214);
         photoList[2] = photoInit(canvasWidth - imgWidth);
@@ -59,7 +60,7 @@ const Top = () => {
 
       canvasWidth = window.innerWidth;
       canvasHeight = () => {
-        if (window.innerWidth > 1023) {
+        if (isDesktop) {
           return window.innerWidth * 0.55 > window.innerHeight ? window.innerHeight : window.innerWidth * 0.55;
         } else {
           return window.innerWidth * 1.25 > window.innerHeight ? window.innerHeight : window.innerWidth * 1.25;
@@ -67,14 +68,14 @@ const Top = () => {
       };
       canvas.width = canvasWidth;
       canvas.height = canvasHeight();
-      let imgWidth = window.innerWidth > 1023 ? canvasWidth * 0.45 : canvasHeight() * 0.7;
-      let imgHeight = window.innerWidth > 1023 ? (imgWidth * 800) / 642 : canvasHeight();
+      let imgWidth = isDesktop ? canvasWidth * 0.45 : canvasHeight() * 0.7;
+      let imgHeight = isDesktop ? (imgWidth * 800) / 642 : canvasHeight();
 
       for (let i = 0; i < photoList.length; i++) {
         let photo = photoList[i];
         photo.angleX += photo.speedX;
         photo.angleY += photo.speedY;
-        let dx = Math.cos(((photo.angleX * (Math.PI / 180)) / 5) * 10) * 20 + 20;
+        let dx = Math.cos(((photo.angleX * (Math.PI / 180)) / 5) * 10) * 20 + (isDesktop ? 20 : 70);
         let dy = Math.sin(((photo.angleX * (Math.PI / 180)) / 5) * 10) * 20 + 20;
         ctx.drawImage(img, dx, dy, 600, 600 * 1.24, photo.x, photo.y, imgWidth, imgHeight);
         // ctx.drawImage(img, photo.x, photo.y, imgWidth, imgHeight);
