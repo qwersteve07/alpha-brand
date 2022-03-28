@@ -55,12 +55,12 @@ const splitImagesData = [
     rotationX: -3,
   },
   {
-    translateY: -2,
-    rotationX: 1,
+    translateY: 0,
+    rotationX: 0,
   },
   {
-    translateY: 2,
-    rotationX: -1,
+    translateY: 1,
+    rotationX: 2,
   },
   {
     translateY: 5,
